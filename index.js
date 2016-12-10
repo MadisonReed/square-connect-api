@@ -1,14 +1,13 @@
 const request = require('request');
-const async = require('async');
 const cheerio = require('cheerio');
 const API_HOST = 'https://connect.squareup.com';
 
 /* **********************************************************
  *     EXPORTS
  ************************************************************ */
- module.exports = squareConnect;
+ module.exports = SquareConnect;
 
- function squareConnect(locationId, accessToken, extendedDebugInfo = false) {
+ function SquareConnect(locationId, accessToken, extendedDebugInfo = false) {
    this.locationId = locationId;
    this.accessToken = accessToken;
    this.extendedDebugInfo = extendedDebugInfo;
@@ -19,51 +18,53 @@ const API_HOST = 'https://connect.squareup.com';
  *     PUBLIC METHODS
  ************************************************************ */
 
-squareConnect.prototype.constructOpts = constructOpts;
-squareConnect.prototype.handleRequest = handleRequest;
-squareConnect.prototype.handleError = handleError;
+SquareConnect.prototype.constructOpts = constructOpts;
+SquareConnect.prototype.handleRequest = handleRequest;
+SquareConnect.prototype.handleError = handleError;
 
-squareConnect.prototype.getMerchantProfile = getMerchantProfile;
+SquareConnect.prototype.getMerchantProfile = getMerchantProfile;
 
-squareConnect.prototype.listCustomers = listCustomers;
-squareConnect.prototype.getCustomer = getCustomer;
+SquareConnect.prototype.listCustomers = listCustomers;
+SquareConnect.prototype.getCustomer = getCustomer;
 
-squareConnect.prototype.listEmployees = listEmployees;
-squareConnect.prototype.createEmployeeFromUser = createEmployeeFromUser;
-squareConnect.prototype.updateEmployee = updateEmployee;
+SquareConnect.prototype.listEmployees = listEmployees;
+SquareConnect.prototype.listRoles = listRoles;
+SquareConnect.prototype.createEmployeeFromUser = createEmployeeFromUser;
+SquareConnect.prototype.updateEmployee = updateEmployee;
 
-squareConnect.prototype.listItems = listItems;
-squareConnect.prototype.getItem = getItem;
-squareConnect.prototype.createItem = createItem;
-squareConnect.prototype.updateItem = updateItem;
+SquareConnect.prototype.listItems = listItems;
+SquareConnect.prototype.getItem = getItem;
+SquareConnect.prototype.createItem = createItem;
+SquareConnect.prototype.updateItem = updateItem;
+SquareConnect.prototype.deleteItem = deleteItem;
 
-squareConnect.prototype.createVariation = createVariation;
-squareConnect.prototype.updateVariation = updateVariation;
+SquareConnect.prototype.createVariation = createVariation;
+SquareConnect.prototype.updateVariation = updateVariation;
 
-squareConnect.prototype.listInventory = listInventory;
-squareConnect.prototype.uploadItemImage = uploadItemImage;
+SquareConnect.prototype.listInventory = listInventory;
+SquareConnect.prototype.uploadItemImage = uploadItemImage;
 
-squareConnect.prototype.listCategories = listCategories;
-squareConnect.prototype.createCategory = createCategory;
-squareConnect.prototype.deleteCategory = deleteCategory;
+SquareConnect.prototype.listCategories = listCategories;
+SquareConnect.prototype.createCategory = createCategory;
+SquareConnect.prototype.deleteCategory = deleteCategory;
 
-squareConnect.prototype.listTransactions = listTransactions;
-squareConnect.prototype.getTransaction = getTransaction;
+SquareConnect.prototype.listTransactions = listTransactions;
+SquareConnect.prototype.getTransaction = getTransaction;
 
-squareConnect.prototype.listPayments = listPayments;
-squareConnect.prototype.getPayment = getPayment;
+SquareConnect.prototype.listPayments = listPayments;
+SquareConnect.prototype.getPayment = getPayment;
 
-squareConnect.prototype.getCustomerInfoFromReceipt = getCustomerInfoFromReceipt;
+SquareConnect.prototype.getCustomerInfoFromReceipt = getCustomerInfoFromReceipt;
 
-function getMerchantProfile(salonCode, callback) {
-  this.handleRequest(constructOpts('GET', '/v1/me'), callback);
+function getMerchantProfile(callback) {
+  this.handleRequest(this.constructOpts('GET', '/v1/me'), callback);
 }
 
 // ----------------------------------------------------------
 //    Role Methods
 // ----------------------------------------------------------
 function listRoles(callback) {
-  this.handleRequest(constructOpts('/v1/me/roles'), callback);
+  this.handleRequest(this.constructOpts('/v1/me/roles'), callback);
 }
 
 // ----------------------------------------------------------
@@ -375,5 +376,5 @@ function handleError(response, body, callback) {
   }
 
   let errStr = JSON.stringify(errInfo);
-  return callback(new Error(errInfo));
+  return callback(new Error(errStr));
 }
