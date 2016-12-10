@@ -412,3 +412,4 @@ Extracts AID from customer recipt based on Url, only to be used for Card Transac
 | Param | Type | Description |
 | --- | --- | --- |
 | receiptUrl | <code>String</code> | URL of payment receipt |
+| callback | <code>function</code> |  |

@@ -430,6 +430,7 @@ function getPayment(paymentId, callback) {
 /**
  * Extracts AID from customer recipt based on Url, only to be used for Card Transactions
  * @param  {String}   receiptUrl - URL of payment receipt
+ * @param  {Function} callback
  */
 function getCustomerInfoFromReceipt(receiptUrl, callback) {
   var opts = {
