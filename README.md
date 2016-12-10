@@ -72,6 +72,9 @@ it could also automatically generate the image extension via something like Grap
 <dt><a href="#getTransaction">getTransaction(transactionId, callback)</a></dt>
 <dd><p>fetches a transaction based on transaction ID</p>
 </dd>
+<dt><a href="#voidTransaction">voidTransaction(transactionId, callback)</a></dt>
+<dd><p>voids a transaction based on Transaction ID</p>
+</dd>
 <dt><a href="#listPayments">listPayments(params, callback)</a></dt>
 <dd><p>lists payments based on instance location ID, has various query parameters</p>
 </dd>
@@ -361,6 +364,18 @@ fetches a transaction based on transaction ID
 | Param | Type | Description |
 | --- | --- | --- |
 | transactionId | <code>String</code> | transaction ID to fetch |
+| callback | <code>function</code> |  |
+
+<a name="voidTransaction"></a>
+
+## voidTransaction(transactionId, callback)
+voids a transaction based on Transaction ID
+
+**Kind**: global function
+
+| Param | Type | Description |
+| --- | --- | --- |
+| transactionId | <code>String</code> | Transaction ID to void |
 | callback | <code>function</code> |  |
 
 <a name="listPayments"></a>

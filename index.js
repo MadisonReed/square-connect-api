@@ -57,6 +57,7 @@ SquareConnect.prototype.deleteCategory = deleteCategory;
 
 SquareConnect.prototype.listTransactions = listTransactions;
 SquareConnect.prototype.getTransaction = getTransaction;
+SquareConnect.prototype.voidTransaciton = voidTransaction;
 
 SquareConnect.prototype.listPayments = listPayments;
 SquareConnect.prototype.getPayment = getPayment;
@@ -369,6 +370,16 @@ function getTransaction(transactionId, callback) {
 
     callback(null, result.transaction);
   });
+}
+
+/**
+ * voids a transaction based on Transaction ID
+ * @param  {String}   transactionId - Transaction ID to void
+ * @param  {Function} callback
+ */
+function voidTransaction(transactionId, callback) {
+  var opts = this.constructOpts('POST', `/v2/locations/${this.locationId}/transactions/${transactionId}/void`);
+  this.handleRequest(opts.callback);
 }
 
 /**
