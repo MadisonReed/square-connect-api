@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "generateDocs": "jsdoc2md index.js"
+    "generate-docs": "jsdoc2md index.js > README.md"
   },
   "keywords": [
     "square",
