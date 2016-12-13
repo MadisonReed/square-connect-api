@@ -22,6 +22,10 @@ const API_HOST = 'https://connect.squareup.com';
 //TODO: ALL of customer card
 
 
+/**
+ * HELLO WORLD
+ */
+
 /* **********************************************************
  *     EXPORTS
  ************************************************************ */
@@ -41,75 +45,18 @@ function SquareConnect(locationId, accessToken, extendedDebugInfo = false) {
 }
 
 /* **********************************************************
- *     PUBLIC METHODS
+ *    PUBLIC METHODS
  ************************************************************ */
 
-//Helpers
-SquareConnect.prototype.constructOpts = constructOpts;
-SquareConnect.prototype.handleRequest = handleRequest;
-SquareConnect.prototype.handleError = handleError;
-
-//API
-SquareConnect.prototype.getMerchantProfile = getMerchantProfile;
-SquareConnect.prototype.listLocations = listLocations;
-
-SquareConnect.prototype.listCustomers = listCustomers;
-SquareConnect.prototype.getCustomer = getCustomer;
-SquareConnect.prototype.createCustomer = createCustomer;
-SquareConnect.prototype.updateCustomer = updateCustomer;
-SquareConnect.prototype.deleteCustomer = deleteCustomer;
-SquareConnect.prototype.getCustomerInfoFromReceipt = getCustomerInfoFromReceipt;
-
-SquareConnect.prototype.listBankAccounts = listBankAccounts;
-SquareConnect.prototype.getBankAccount = getBankAccount;
-
-SquareConnect.prototype.listEmployees = listEmployees;
-SquareConnect.prototype.getEmployee = getEmployee;
-SquareConnect.prototype.createEmployee = createEmployee;
-SquareConnect.prototype.updateEmployee = updateEmployee;
-
-SquareConnect.prototype.listRoles = listRoles;
-SquareConnect.prototype.getRole = getRole;
-SquareConnect.prototype.createRole = createRole;
-SquareConnect.prototype.updateRole = updateRole;
-
-SquareConnect.prototype.listItems = listItems;
-SquareConnect.prototype.getItem = getItem;
-SquareConnect.prototype.createItem = createItem;
-SquareConnect.prototype.updateItem = updateItem;
-SquareConnect.prototype.deleteItem = deleteItem;
-SquareConnect.prototype.uploadItemImage = uploadItemImage;
-
-SquareConnect.prototype.createVariation = createVariation;
-SquareConnect.prototype.updateVariation = updateVariation;
-SquareConnect.prototype.deleteVariation = deleteVariation;
-
-SquareConnect.prototype.listInventory = listInventory;
-SquareConnect.prototype.adjustInventory = adjustInventory;
-
-SquareConnect.prototype.listCategories = listCategories;
-SquareConnect.prototype.createCategory = createCategory;
-SquareConnect.prototype.deleteCategory = deleteCategory;
-SquareConnect.prototype.updateCategory = updateCategory;
-
-SquareConnect.prototype.listTransactions = listTransactions;
-SquareConnect.prototype.getTransaction = getTransaction;
-SquareConnect.prototype.voidTransaciton = voidTransaction;
-SquareConnect.prototype.chargeTransaction = chargeTransaction;
-SquareConnect.prototype.captureTransaction = captureTransaction;
-
-SquareConnect.prototype.listPayments = listPayments;
-SquareConnect.prototype.getPayment = getPayment;
-
-
-
-
+// ----------------------------------------------------------
+//    Main Instance Methods
+// ----------------------------------------------------------
 const MERCHANT_ROUTE = '/v1/me';
 /**
  * Returns known Square Data for Merchant based on Auth Token
  * @param  {Function} callback <a href="https://docs.connect.squareup.com/api/connect/v1/#get-merchantid">API</a>
  */
-function getMerchantProfile(callback) {
+SquareConnect.prototype.getMerchantProfile = function getMerchantProfile(callback) {
   this.handleRequest(this.constructOpts(MERCHANT_ROUTE), callback);
 }
 
@@ -117,7 +64,7 @@ function getMerchantProfile(callback) {
  * Returns a list of all locations for this merchant
  * @param  {Function} callback <a href="https://docs.connect.squareup.com/api/connect/v1/#get-locations">API</a>
  */
-function listLocations(callback) {
+SquareConnect.prototype.listLocations = function listLocations(callback) {
   this.handleRequest(this.constructOpts(`${MERCHANT_ROUTE}/locations`), callback);
 }
 
@@ -129,7 +76,7 @@ const ROLE_ROUTE = '/v1/me/roles';
  * Returns known Square Roles for Merchant based on Auth Token
  * @param  {Function} callback <a href="https://docs.connect.squareup.com/api/connect/v1/#navsection-roles">API</a>
  */
-function listRoles(callback) {
+SquareConnect.prototype.listRoles = function listRoles(callback) {
   this.handleRequest(this.constructOpts(ROLE_ROUTE), callback);
 }
 
@@ -138,7 +85,7 @@ function listRoles(callback) {
  * @param  {String}   roleId - Id of role to query <a href="https://docs.connect.squareup.com/api/connect/v1/#get-roleid">DETAILS</a>
  * @param  {Function} callback
  */
-function getRole(roleId, callback) {
+SquareConnect.prototype.getRole = function getRole(roleId, callback) {
   this.handleRequest(this.constructOpts(`${ROLE_ROUTE}/${roleId}`), callback);
 }
 
@@ -147,17 +94,17 @@ function getRole(roleId, callback) {
  * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v1/#post-roles">PROPERTIES</a>
  * @param  {Function} callback
  */
-function createRole(data, callback) {
+SquareConnect.prototype.createRole = function createRole(data, callback) {
   this.handleRequest(this.constructOpts('POST', ROLE_ROUTE), callback);
 }
 
 /**
  * Updates a Role based on roleId and provided data
- * @param  {String}   roleId   [description]
+ * @param  {String}   roleId   Role Id to Update
  * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v1/#put-roleid">PROPERTIES</a>
- * @param  {Function} callback [description]
+ * @param  {Function} callback
  */
-function updateRole(roleId, data, callback) {
+SquareConnect.prototype.updateRole = function updateRole(roleId, data, callback) {
   this.handleRequest(this.constructOpts('PUT', `${ROLE_ROUTE}/${roleId}`), callback);
 }
 
@@ -169,16 +116,16 @@ function updateRole(roleId, data, callback) {
  * Returns Employees based on location ID
  * @param  {Function} callback <a href="https://docs.connect.squareup.com/api/connect/v1/#get-employees">API</a>
  */
-function listEmployees(callback) {
+SquareConnect.prototype.listEmployees = function listEmployees(callback) {
   this.handleRequest(this.constructOpts(`${MERCHANT_ROUTE}/employees`), callback);
 }
 
 /**
  * Returns and Employee by employee Id
- * @param  {String}   employeeId <a href="https://docs.connect.squareup.com/api/connect/v1/#get-employeeid">API</a>
+ * @param  {String}   employeeId - Employee Id to Fetch <a href="https://docs.connect.squareup.com/api/connect/v1/#get-employeeid">API</a>
  * @param  {Function} callback
  */
-function getEmployee(employeeId, callback) {
+SquareConnect.prototype.getEmployee = function getEmployee(employeeId, callback) {
   this.handleRequest(this.constructOpts(`${MERCHANT_ROUTE}/${employeeId}`), callback);
 }
 
@@ -187,7 +134,7 @@ function getEmployee(employeeId, callback) {
  * @param  {Object} data <a href="https://docs.connect.squareup.com/api/connect/v1/#post-employees">Properties</a>
  * @param  {Function} callback
  */
-function createEmployee(data, callback) {
+SquareConnect.prototype.createEmployee = function createEmployee(data, callback) {
   var opts = this.constructOpts('POST', `${MERCHANT_ROUTE}/employees`);
   opts.json = data;
   this.handleRequest(opts, callback);
@@ -195,11 +142,11 @@ function createEmployee(data, callback) {
 
 /**
  * Update Employee based on employee ID
- * @param  {String}   squareEmployeeId
+ * @param  {String}   squareEmployeeId - Employee Id to Update
  * @param  {Object}   data        <a href="https://docs.connect.squareup.com/api/connect/v1/#put-employeeid">Properties</a>
- * @param  {Function} callback         [description]
+ * @param  {Function} callback
  */
-function updateEmployee(squareEmployeeId, data, callback) {
+SquareConnect.prototype.updateEmployee = function updateEmployee(squareEmployeeId, data, callback) {
   var opts = this.constructOpts('PUT', `${MERCHANT_ROUTE}/employees/${squareEmployeeId}`);
   opts.json = data;
   this.handleRequest(opts, callback);
@@ -213,7 +160,7 @@ function updateEmployee(squareEmployeeId, data, callback) {
  * list Items based on location ID
  * @param  {Function} callback <a href="https://docs.connect.squareup.com/api/connect/v1/#get-items">API</a>
  */
-function listItems(callback) {
+SquareConnect.prototype.listItems = function listItems(callback) {
   this.handleRequest(this.constructOpts(`/v1/${this.locationId}/items`), callback);
 }
 
@@ -222,7 +169,7 @@ function listItems(callback) {
  * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v1/#post-items">PROPERTIES</a>
  * @param  {Function} callback
  */
-function createItem(data, callback) {
+SquareConnect.prototype.createItem = function createItem(data, callback) {
   var opts = this.constructOpts('POST', `/v1/${this.locationId}/items`);
   opts.json = data;
   this.handleRequest(opts, callback);
@@ -233,7 +180,7 @@ function createItem(data, callback) {
  * @param  {String}   itemId   item ID to fetch <a href="https://docs.connect.squareup.com/api/connect/v1/#get-itemid">API</a>
  * @param  {Function} callback
  */
-function getItem(itemId, callback) {
+SquareConnect.prototype.getItem = function getItem(itemId, callback) {
   this.handleRequest(this.constructOpts(`/v1/${this.locationId}/items/${itemId}`), callback);
 }
 
@@ -243,7 +190,7 @@ function getItem(itemId, callback) {
  * @param  {Object}   data     <a href-"https://docs.connect.squareup.com/api/connect/v1/#put-itemid">PROPERTIES</a>
  * @param  {Function} callback
  */
-function updateItem(itemId, data, callback) {
+SquareConnect.prototype.updateItem = function updateItem(itemId, data, callback) {
   var opts = this.constructOpts('PUT', `/v1/${this.locationId}/items/${itemId}`);
   opts.json = data;
   this.handleRequest(opts, callback);
@@ -254,20 +201,20 @@ function updateItem(itemId, data, callback) {
  * @param  {String}   itemId   Item ID to delete  <a href="https://docs.connect.squareup.com/api/connect/v1/#delete-itemid">API</a>
  * @param  {Function} callback
  */
-function deleteItem(itemId, callback) {
+SquareConnect.prototype.deleteItem = function deleteItem(itemId, callback) {
   this.handleRequest(this.constructOpts('DELETE', `/v1/${this.locationId}/items/${itemId}`), callback);
 }
 
 /**
  * Uploads an Item image. This function is intended to use url based references but could be updated to use file system images. If requested,
  * it could also automatically generate the image extension via something like GraphicsMagick/ImageMagick
- * <a href="https://docs.connect.squareup.com/api/connect/v1/#post-image">DOCS</a>
+ * <a href="https://docs.connect.squareup.com/api/connect/v1/#post-image">Read More</a>
  * @param  {String}   itemId         Item ID to upload image for
  * @param  {String}   imageUrl       Image URL path
  * @param  {String}   imageExtension Image Extension
  * @param  {Function} callback
  */
-function uploadItemImage(itemId, imageUrl, imageExtension, callback) {
+SquareConnect.prototype.uploadItemImage = function uploadItemImage(itemId, imageUrl, imageExtension, callback) {
   var rawRequest = require('request').defaults({ encoding: null });
   var uri = `v1/${this.locationId}/items/${itemId}/image`;
 
@@ -322,7 +269,7 @@ function uploadItemImage(itemId, imageUrl, imageExtension, callback) {
  * List Inventory of Items & Variations based on Location Id
  * @param  {Function} callback <a href="https://docs.connect.squareup.com/api/connect/v1/#get-inventory"></a>
  */
-function listInventory(callback) {
+SquareConnect.prototype.listInventory = function listInventory(callback) {
   this.handleRequest(this.constructOpts(`/v1/${this.locationId}/inventory`), callback);
 }
 
@@ -332,7 +279,7 @@ function listInventory(callback) {
  * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v1/#post-inventory-variationid">PROPERTIES</a>
  * @param  {Function} callback
  */
-function adjustInventory(variationId, data, callback) {
+SquareConnect.prototype.adjustInventory = function adjustInventory(variationId, data, callback) {
   var opts = this.constructOpts('POST', `/v1/${this.locationId}/inventory/${this.variationId}`);
   opts.json = data;
   this.handleRequest(opts, callback);
@@ -346,7 +293,7 @@ function adjustInventory(variationId, data, callback) {
  * list Categories based on location ID
  * @param  {Function} callback <a href="https://docs.connect.squareup.com/api/connect/v1/#get-categories"></a>
  */
-function listCategories(callback) {
+SquareConnect.prototype.listCategories = function listCategories(callback) {
   this.handleRequest(this.constructOpts(`/v1/${this.locationId}/categories`), callback);
 }
 
@@ -355,7 +302,7 @@ function listCategories(callback) {
  * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v1/#post-categories">PROPERTIES</a>
  * @param  {Function} callback
  */
-function createCategory(data, callback) {
+SquareConnect.prototype.createCategory = function createCategory(data, callback) {
   var opts = this.constructOpts('POST', `/v1/${this.locationId}/categories`);
   opts.json = data;
   this.handleRequest(opts, callback);
@@ -367,7 +314,7 @@ function createCategory(data, callback) {
  * @param  {Object}   data       <a href="https://docs.connect.squareup.com/api/connect/v1/#put-categoryid">PROPERTIES</a>
  * @param  {Function} callback
  */
-function updateCategory(categoryId, data, callback) {
+SquareConnect.prototype.updateCategory = function updateCategory(categoryId, data, callback) {
   var opts = this.constructOpts('PUT', `/v1/${locationId}/categories/${categoryId}`);
   opts.json = data;
   this.handleRequest(opts, callback);
@@ -378,7 +325,7 @@ function updateCategory(categoryId, data, callback) {
  * @param  {String}   categoryId  - category ID to delete <a href="https://docs.connect.squareup.com/api/connect/v1/#delete-categoryid"></a>
  * @param  {Function} callback
  */
-function deleteCategory(categoryId, callback) {
+SquareConnect.prototype.deleteCategory = function deleteCategory(categoryId, callback) {
   this.handleRequest(this.constructOpts('DELETE', `/v1/${this.locationId}/categories/${categoryId}`), callback);
 }
 
@@ -392,7 +339,7 @@ function deleteCategory(categoryId, callback) {
  * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v1/#post-variations">PROPERTIES</a>
  * @param  {Function} callback
  */
-function createVariation(itemId, data, callback) {
+SquareConnect.prototype.createVariation = function createVariation(itemId, data, callback) {
   var opts = this.constructOpts('POST', `/v1/${this.locationId}/items/${itemId}/variations`);
   opts.json = data;
   this.handleRequest(opts, callback);
@@ -405,7 +352,7 @@ function createVariation(itemId, data, callback) {
  * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v1/#put-variationid">PROPERTIES</a>
  * @param  {Function} callback
  */
-function updateVariation(itemId, variationId, data, callback) {
+SquareConnect.prototype.updateVariation = function updateVariation(itemId, variationId, data, callback) {
   var opts = this.constructOpts('PUT', `/v1/${this.locationId}/items/${itemId}/variations/${variationId}`);
   opts.json = data;
   this.handleRequest(opts, callback);
@@ -417,7 +364,7 @@ function updateVariation(itemId, variationId, data, callback) {
  * @param  {String}   variationId Variation ID to Delete <a href="https://docs.connect.squareup.com/api/connect/v1/#delete-variationid">API</a>
  * @param  {Function} callback
  */
-function deleteVariation(itemId, variationId, callback) {
+SquareConnect.prototype.deleteVariation = function deleteVariation(itemId, variationId, callback) {
   this.handleRequest(this.constructOpts('DELETE', `/v1/${this.locationId}/items/{itemId}/variations/${variationId}`), callback);
 }
 
@@ -429,7 +376,7 @@ const CUSTOMER_ROUTE = '/v2/customers';
  * Lists Customers via instance Auth Token
  * @param  {Function} callback <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-listcustomers">API</a>
  */
-function listCustomers(callback) {
+SquareConnect.prototype.listCustomers = function listCustomers(callback) {
   this.handleRequest(this.constructOpts(CUSTOMER_ROUTE), callback);
 }
 
@@ -438,7 +385,7 @@ function listCustomers(callback) {
  * @param  {String}   customerId - customer ID to fetch <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-retrievecustomer"></a>
  * @param  {Function} callback
  */
-function getCustomer(customerId, callback) {
+SquareConnect.prototype.getCustomer = function getCustomer(customerId, callback) {
   this.handleRequest(this.constructOpts(`${CUSTOMER_ROUTE}/${this.customerId}`), callback);
 }
 
@@ -447,7 +394,7 @@ function getCustomer(customerId, callback) {
  * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-createcustomer">PROPERTIES</a>
  * @param  {Function} callback
  */
-function createCustomer(data, callback) {
+SquareConnect.prototype.createCustomer = function createCustomer(data, callback) {
   var opts = this.constructOpts('POST', CUSTOMER_ROUTE);
   opts.json = data;
   this.handleRequest(opts, callback);
@@ -459,7 +406,7 @@ function createCustomer(data, callback) {
  * @param  {Object}   data       <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-updatecustomer">PROPERTIES</a>
  * @param  {Function} callback
  */
-function updateCustomer(customerId, data, callback) {
+SquareConnect.prototype.updateCustomer = function updateCustomer(customerId, data, callback) {
   var opts = this.constructOpts('PUT', `${customerId}/customerId`);
   opts.json = data;
   this.handleRequest(opts, callback);
@@ -470,7 +417,7 @@ function updateCustomer(customerId, data, callback) {
  * @param  {String}   customerId - Customer Id to Delete <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-deletecustomer">API</a>
  * @param  {Function} callback
  */
-function deleteCustomer(customerId, callback) {
+SquareConnect.prototype.deleteCustomer = function deleteCustomer(customerId, callback) {
   this.handleRequest(this.constructOpts('DELETE', `${CUSTOMER_ROUTE}/${customerId}`), callback);
 }
 
@@ -482,7 +429,7 @@ function deleteCustomer(customerId, callback) {
  * Lists Bank Accounts for an Instance
  * @param  {Function} callback <a href="https://docs.connect.squareup.com/api/connect/v1/#get-bankaccounts">API</a>
  */
-function listBankAccounts(callback) {
+SquareConnect.prototype.listBankAccounts = function listBankAccounts(callback) {
   this.handleRequest(this.constructOpts(`/v1/${this.locationId}/bank-accounts`), callback);
 }
 
@@ -491,7 +438,7 @@ function listBankAccounts(callback) {
  * @param  {String}   bankAccountId <a href="https://docs.connect.squareup.com/api/connect/v1/#get-bankaccountid">API</a>
  * @param  {Function} callback
  */
-function getBankAccount(bankAccountId, callback) {
+SquareConnect.prototype.getBankAccount = function getBankAccount(bankAccountId, callback) {
   this.handleRequest(this.constructOpts(`/v1/${this.locationId}/bank-accounts/${bankAccountId}`), callback);
 }
 
@@ -504,7 +451,7 @@ function getBankAccount(bankAccountId, callback) {
  * @param  {Objects}   params  <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-listtransactions">PROPERTIES</a>
  * @param  {Function} callback [description]
  */
-function listTransactions(params, callback) {
+SquareConnect.prototype.listTransactions = function listTransactions(params, callback) {
   callback = Array.prototype.pop.call(arguments);
 
   switch (arguments.length) {
@@ -533,7 +480,7 @@ function listTransactions(params, callback) {
  * @param  {String}   transactionId transaction ID to fetch <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-retrievetransaction">API</a>
  * @param  {Function} callback
  */
-function getTransaction(transactionId, callback) {
+SquareConnect.prototype.getTransaction = function getTransaction(transactionId, callback) {
   this.handleRequest(this.constructOpts('GET', `/v2/locations/${this.locationId}/transactions/${transactionId}`), callback);
 }
 
@@ -542,7 +489,7 @@ function getTransaction(transactionId, callback) {
  * @param  {String}   transactionId - Transaction ID to void <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-voidtransaction">API</a>
  * @param  {Function} callback
  */
-function voidTransaction(transactionId, callback) {
+SquareConnect.prototype.voidTransaction = function voidTransaction(transactionId, callback) {
   this.handleRequest(this.constructOpts('POST', `/v2/locations/${this.locationId}/transactions/${transactionId}/void`), callback);
 }
 
@@ -551,7 +498,7 @@ function voidTransaction(transactionId, callback) {
  * @param  {Object}   data          <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-charge">PROPERTIES</a>
  * @param  {Function} callback
  */
-function chargeTransaction(data, callback) {
+SquareConnect.prototype.chargeTransaction = function chargeTransaction(data, callback) {
   var opts = this.constructOpts('POST', `/v2/locations/${this.locationId}/transactions`);
   opts.json = data;
   this.handleRequest(opts, callback);
@@ -562,7 +509,7 @@ function chargeTransaction(data, callback) {
  * @param  {String}   transactionId <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-capturetransaction">API</a>
  * @param  {Function} callback
  */
-function captureTransaction(transactionId, callback) {
+SquareConnect.prototype.captureTransaction = function captureTransaction(transactionId, callback) {
   this.handleRequest(this.constructOpts('POST', `/v2/locations/${this.locationId}/transactions/${transactionId}/capture`), callback);
 }
 
@@ -575,7 +522,7 @@ function captureTransaction(transactionId, callback) {
  * @param  {Object}   params   <a href="https://docs.connect.squareup.com/api/connect/v1/#get-payments">PROPERTIES</a>
  * @param  {Function} callback
  */
-function listPayments(params, callback) {
+SquareConnect.prototype.listPayments = function listPayments(params, callback) {
   callback = Array.prototype.pop.call(arguments);
 
   switch (arguments.length) {
@@ -604,7 +551,7 @@ function listPayments(params, callback) {
  * @param  {String}   paymentId payment ID to fetch <a href="https://docs.connect.squareup.com/api/connect/v1/#get-paymentid">API</a>
  * @param  {Function} callback
  */
-function getPayment(paymentId, callback) {
+SquareConnect.prototype.getPayment = function getPayment(paymentId, callback) {
   this.handleRequest(this.constructOpts('GET', `/v1/${this.locationId}/payments/${paymentId}`), (err, result) => {
     /* istanbul ignore if */
     if (err) {
@@ -620,7 +567,7 @@ function getPayment(paymentId, callback) {
  * @param  {String}   receiptUrl - URL of payment receipt
  * @param  {Function} callback
  */
-function getCustomerInfoFromReceipt(receiptUrl, callback) {
+SquareConnect.prototype.getCustomerInfoFromReceipt = function getCustomerInfoFromReceipt(receiptUrl, callback) {
   var opts = {
     headers: {
       Authorization: `Bearer ${this.accessToken}`,
@@ -640,8 +587,10 @@ function getCustomerInfoFromReceipt(receiptUrl, callback) {
   });
 }
 
-///////////////////////////// HELPER METHODS ///////////////////////////////////
-function constructOpts(method, uri) {
+// ----------------------------------------------------------
+//    Instance Helpers
+// ----------------------------------------------------------
+SquareConnect.prototype.constructOpts = function constructOpts(method, uri) {
   switch (arguments.length) {
     case 1:
       uri = method;
@@ -664,7 +613,7 @@ function constructOpts(method, uri) {
   };
 }
 
-function handleRequest(opts, callback) {
+SquareConnect.prototype.handleRequest = function handleRequest(opts, callback) {
   request(opts, (err, response, body) => {
     /* istanbul ignore if */
     if (err) {
@@ -682,19 +631,7 @@ function handleRequest(opts, callback) {
   });
 }
 
-function constructQueryString(params) {
-  var result = '';
-  var startParam = '?';
-  Object.keys(params).forEach((key, idx) => {
-    if (idx > 0) {
-      startParam = '&'
-    }
-    result += `${startParam}${key}=${params[key]}`
-  });
-  return result;
-}
-
-function handleError(response, body, callback) {
+SquareConnect.prototype.handleError = function handleError(response, body, callback) {
   let errInfo = {
     statusCode: response.statusCode,
     message: response.statusMessage
@@ -706,6 +643,21 @@ function handleError(response, body, callback) {
 
   let errStr = JSON.stringify(errInfo);
   return callback(new Error(errStr));
+}
+
+// ----------------------------------------------------------
+//    Utils
+// ----------------------------------------------------------
+function constructQueryString(params) {
+  var result = '';
+  var startParam = '?';
+  Object.keys(params).forEach((key, idx) => {
+    if (idx > 0) {
+      startParam = '&'
+    }
+    result += `${startParam}${key}=${params[key]}`
+  });
+  return result;
 }
 
 function stripCustomerFromBody(body) {
