@@ -2,6 +2,28 @@ const request = require('request');
 const cheerio = require('cheerio');
 const API_HOST = 'https://connect.squareup.com';
 
+//V1
+//TODO: ALL of timecards
+//TODO: ALL of drawer shifts
+//TODO: ALL of settlements
+//TODO: ALL of refunds
+//TODO: ALL of orders
+//TODO: ALL of bank accounts
+//TODO: ALL of discounts
+//TODO: ALL of fees
+//TODO: ALL of pages
+//TODO: ALL of cells
+//TODO: Inventory - adjust
+//TODO: Categories: update
+
+//V2 (register methods
+//TODO: ALL of transaction
+//TODO: ALL of refund
+//TODO: ALL of location
+//TODO: customer: - create, update, delete
+//TODO: ALL of customer card
+
+
 /* **********************************************************
  *     EXPORTS
  ************************************************************ */
@@ -24,19 +46,26 @@ function SquareConnect(locationId, accessToken, extendedDebugInfo = false) {
  *     PUBLIC METHODS
  ************************************************************ */
 
+//helpers
 SquareConnect.prototype.constructOpts = constructOpts;
 SquareConnect.prototype.handleRequest = handleRequest;
 SquareConnect.prototype.handleError = handleError;
 
+//API
 SquareConnect.prototype.getMerchantProfile = getMerchantProfile;
 
 SquareConnect.prototype.listCustomers = listCustomers;
 SquareConnect.prototype.getCustomer = getCustomer;
 
 SquareConnect.prototype.listEmployees = listEmployees;
-SquareConnect.prototype.listRoles = listRoles;
+SquareConnect.prototype.getEmployee = getEmployee;
 SquareConnect.prototype.createEmployee = createEmployee;
 SquareConnect.prototype.updateEmployee = updateEmployee;
+
+SquareConnect.prototype.listRoles = listRoles;
+SquareConnect.prototype.getRole = getRole;
+SquareConnect.prototype.createRole = createRole;
+SquareConnect.prototype.updateRole = updateRole;
 
 SquareConnect.prototype.listItems = listItems;
 SquareConnect.prototype.getItem = getItem;
@@ -64,24 +93,63 @@ SquareConnect.prototype.getPayment = getPayment;
 
 SquareConnect.prototype.getCustomerInfoFromReceipt = getCustomerInfoFromReceipt;
 
+
+const MERCHANT_ROUTE = '/v1/me';
 /**
  * Returns known Square Data for Merchant based on Auth Token
- * @param  {Function} callback
+ * @param  {Function} callback <a href="https://docs.connect.squareup.com/api/connect/v1/#get-merchantid">API</a>
  */
 function getMerchantProfile(callback) {
-  this.handleRequest(this.constructOpts('GET', '/v1/me'), callback);
+  this.handleRequest(this.constructOpts(MERCHANT_ROUTE), callback);
+}
+
+/**
+ * Returns a list of all locations for this merchant
+ * @param  {Function} callback <a href="https://docs.connect.squareup.com/api/connect/v1/#get-locations">API</a>
+ */
+function listLocations(callback) {
+  this.handleRequest(this.constructOpts(`${MERCHANT_ROUTE}/locations`), callback);
 }
 
 // ----------------------------------------------------------
 //    Role Methods
 // ----------------------------------------------------------
-
+const ROLE_ROUTE = '/v1/me/roles';
 /**
  * Returns known Square Roles for Merchant based on Auth Token
  * @param  {Function} callback
  */
 function listRoles(callback) {
-  this.handleRequest(this.constructOpts('/v1/me/roles'), callback);
+  this.handleRequest(this.constructOpts(ROLE_ROUTE), callback);
+}
+
+/**
+ * Returns a role, queried by Id
+ * @param  {String}   roleId - Id of role to query <a href="https://docs.connect.squareup.com/api/connect/v1/#get-roleid">DETAILS</a>
+ * @param  {Function} callback
+ */
+function getRole(roleId, callback) {
+  this.handleRequest(this.constructOpts(`${ROLE_ROUTE}/${roleId}`), callback);
+}
+
+/**
+ * Creates a Role
+ * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v1/#post-roles">PROPERTIES</a>
+ * @param  {Function} callback
+ */
+function createRole(data, callback) {
+  this.handleRequest(this.constructOpts('POST', ROLE_ROUTE), callback);
+}
+
+/**
+ * Updates a Role based on roleId and provided data
+ * @param  {String}   roleId   [description]
+ * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v1/#put-roleid">PROPERTIES</a>
+ * @param  {Function} callback [description]
+ * @return {[type]}            [description]
+ */
+function updateRole(roleId, data, callback) {
+  this.handleRequest(this.constructOpts('PUT', `${ROLE_ROUTE}/${roleId}`), callback);
 }
 
 // ----------------------------------------------------------
@@ -93,7 +161,16 @@ function listRoles(callback) {
  * @param  {Function} callback
  */
 function listEmployees(callback) {
-  this.handleRequest(this.constructOpts('GET','/v1/me/employees'), callback);
+  this.handleRequest(this.constructOpts(`${MERCHANT_ROUTE}/employees`), callback);
+}
+
+/**
+ * Returns and Employee by employee Id
+ * @param  {String}   employeeId <a href="https://docs.connect.squareup.com/api/connect/v1/#get-employeeid">API</a>
+ * @param  {Function} callback
+ */
+function getEmployee(employeeId, callback) {
+  this.handleRequest(this.constructOpts(`${MERCHANT_ROUTE}/${employeeId}`), callback);
 }
 
 /**
@@ -102,7 +179,7 @@ function listEmployees(callback) {
  * @param  {Function} callback
  */
 function createEmployee(data, callback) {
-  var opts = this.constructOpts('POST', '/v1/me/employees');
+  var opts = this.constructOpts('POST', `${MERCHANT_ROUTE}/employees`);
   opts.json = data;
   this.handleRequest(opts, callback);
 }
@@ -114,57 +191,21 @@ function createEmployee(data, callback) {
  * @param  {Function} callback         [description]
  */
 function updateEmployee(squareEmployeeId, data, callback) {
-  var opts = this.constructOpts('PUT', `/v1/me/employees/${squareEmployeeId}`);
+  var opts = this.constructOpts('PUT', `${MERCHANT_ROUTE}/employees/${squareEmployeeId}`);
   opts.json = data;
   this.handleRequest(opts, callback);
 }
 
 // ----------------------------------------------------------
-//    Inventory methods
+//    Item methods
 // ----------------------------------------------------------
 
 /**
  * list Items based on location ID
- * @param  {Function} callback
+ * @param  {Function} callback <a href="https://docs.connect.squareup.com/api/connect/v1/#get-items"></a>
  */
 function listItems(callback) {
   this.handleRequest(this.constructOpts(`/v1/${this.locationId}/items`), callback);
-}
-
-/**
- * list Inventory of Items/Variations based on location ID
- * @param  {Function} callback
- */
-function listInventory(callback) {
-  this.handleRequest(this.constructOpts(`/v1/${this.locationId}/inventory`), callback);
-}
-
-/**
- * list Categories based on location ID
- * @param  {Function} callback
- */
-function listCategories(callback) {
-  this.handleRequest(this.constructOpts(`/v1/${this.locationId}/categories`), callback);
-}
-
-/**
- * Creates a Category
- * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v1/#post-categories">PROPERTIES</a>
- * @param  {Function} callback
- */
-function createCategory(data, callback) {
-  var opts = this.constructOpts('POST', `/v1/${this.locationId}/categories`);
-  opts.json = data;
-  this.handleRequest(opts, callback);
-}
-
-/**
- * Deletes a Category
- * @param  {String}   categoryId  - category ID to delete
- * @param  {Function} callback
- */
-function deleteCategory(categoryId, callback) {
-  this.handleRequest(this.constructOpts('DELETE', `/v1/${this.locationId}/categories/${categoryId}`), callback);
 }
 
 /**
@@ -180,7 +221,7 @@ function createItem(data, callback) {
 
 /**
  * Fetches an Item based on Item ID
- * @param  {String}   itemId   item ID to fetch
+ * @param  {String}   itemId   item ID to fetch <a href=""></a>
  * @param  {Function} callback
  */
 function getItem(itemId, callback) {
@@ -207,42 +248,6 @@ function updateItem(itemId, data, callback) {
  */
 function deleteItem(itemId, callback) {
   this.handleRequest(this.constructOpts('DELETE', `/v1/${this.locationId}/items/${itemId}`), callback);
-}
-
-/**
- * Creates a Variation for an already created Item
- * @param  {String}   itemId   Item ID to create the Variation for
- * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v1/#post-variations">PROPERTIES</a>
- * @param  {Function} callback
- */
-function createVariation(itemId, data, callback) {
-  var opts = this.constructOpts('POST', `/v1/${this.locationId}/items/${itemId}/variations`);
-  opts.json = data;
-  this.handleRequest(opts, callback);
-}
-
-/**
- * Updates a Variation for an already created Item and Variation
- * @param  {String}   itemId   Item ID for referencing child Variation
- * @param  {String}   variationId   Variation ID to update the Variation for
- * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v1/#put-variationid">PROPERTIES</a>
- * @param  {Function} callback
- */
-function updateVariation(itemId, variationId, data, callback) {
-  var opts = this.constructOpts('PUT', `/v1/${this.locationId}/items/${itemId}/variations/${variationId}`);
-  opts.json = data;
-  this.handleRequest(opts, callback);
-}
-
-/**
- * Deletes a Variation for an Item
- * @param  {String}   itemId      Item ID for referencing child Variation
- * @param  {String}   variationId Variation ID to Delete
- * @param  {Function} callback
- */
-function deleteVariation(itemId, variationId, callback) {
-  var opts = this.constructOpts('DELETE', `/v1/${this.locationId}/items/{itemId}/variations/{variationId}`);
-  this.handleRequest(opts, callback);
 }
 
 /**
@@ -302,6 +307,90 @@ function uploadItemImage(itemId, imageUrl, imageExtension, callback) {
 }
 
 // ----------------------------------------------------------
+//    Inventory methods
+// ----------------------------------------------------------
+
+/**
+ * list Inventory of Items/Variations based on location ID
+ * @param  {Function} callback <a href="https://docs.connect.squareup.com/api/connect/v1/#get-inventory"></a>
+ */
+function listInventory(callback) {
+  this.handleRequest(this.constructOpts(`/v1/${this.locationId}/inventory`), callback);
+}
+
+// ----------------------------------------------------------
+//    Category methods
+// ----------------------------------------------------------
+
+/**
+ * list Categories based on location ID
+ * @param  {Function} callback <a href="https://docs.connect.squareup.com/api/connect/v1/#get-categories"></a>
+ */
+function listCategories(callback) {
+  this.handleRequest(this.constructOpts(`/v1/${this.locationId}/categories`), callback);
+}
+
+/**
+ * Creates a Category
+ * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v1/#post-categories">PROPERTIES</a>
+ * @param  {Function} callback
+ */
+function createCategory(data, callback) {
+  var opts = this.constructOpts('POST', `/v1/${this.locationId}/categories`);
+  opts.json = data;
+  this.handleRequest(opts, callback);
+}
+
+/**
+ * Deletes a Category
+ * @param  {String}   categoryId  - category ID to delete <a href="https://docs.connect.squareup.com/api/connect/v1/#delete-categoryid"></a>
+ * @param  {Function} callback
+ */
+function deleteCategory(categoryId, callback) {
+  this.handleRequest(this.constructOpts('DELETE', `/v1/${this.locationId}/categories/${categoryId}`), callback);
+}
+
+// ----------------------------------------------------------
+//    Variation methods
+// ----------------------------------------------------------
+
+/**
+ * Creates a Variation for an already created Item
+ * @param  {String}   itemId   Item ID to create the Variation for
+ * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v1/#post-variations">PROPERTIES</a>
+ * @param  {Function} callback
+ */
+function createVariation(itemId, data, callback) {
+  var opts = this.constructOpts('POST', `/v1/${this.locationId}/items/${itemId}/variations`);
+  opts.json = data;
+  this.handleRequest(opts, callback);
+}
+
+/**
+ * Updates a Variation for an already created Item and Variation
+ * @param  {String}   itemId   Item ID for referencing child Variation
+ * @param  {String}   variationId   Variation ID to update the Variation for
+ * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v1/#put-variationid">PROPERTIES</a>
+ * @param  {Function} callback
+ */
+function updateVariation(itemId, variationId, data, callback) {
+  var opts = this.constructOpts('PUT', `/v1/${this.locationId}/items/${itemId}/variations/${variationId}`);
+  opts.json = data;
+  this.handleRequest(opts, callback);
+}
+
+/**
+ * Deletes a Variation for an Item
+ * @param  {String}   itemId      Item ID for referencing child Variation
+ * @param  {String}   variationId Variation ID to Delete
+ * @param  {Function} callback
+ */
+function deleteVariation(itemId, variationId, callback) {
+  var opts = this.constructOpts('DELETE', `/v1/${this.locationId}/items/{itemId}/variations/{variationId}`);
+  this.handleRequest(opts, callback);
+}
+
+// ----------------------------------------------------------
 //    Customer Methods
 // ----------------------------------------------------------
 
@@ -324,7 +413,7 @@ function getCustomer(customerId, callback) {
 }
 
 // ----------------------------------------------------------
-//    Transaction & Payment Methods
+//    Transaction Methods
 // ----------------------------------------------------------
 
 /**
@@ -382,6 +471,10 @@ function voidTransaction(transactionId, callback) {
   this.handleRequest(opts.callback);
 }
 
+// ----------------------------------------------------------
+//    Payment Methods
+// ----------------------------------------------------------
+
 /**
  * lists payments based on instance location ID, has various query parameters
  * @param  {Object}   params   <a href="https://docs.connect.squareup.com/api/connect/v1/#get-payments">PROPERTIES</a>
@@ -413,7 +506,7 @@ function listPayments(params, callback) {
 
 /**
  * fetches a payment based on payment ID
- * @param  {String}   paymentId payment ID to fetch
+ * @param  {String}   paymentId payment ID to fetch <a href="https://docs.connect.squareup.com/api/connect/v1/#get-paymentid">API</a>
  * @param  {Function} callback
  */
 function getPayment(paymentId, callback) {
