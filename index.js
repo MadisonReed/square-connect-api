@@ -21,11 +21,6 @@ const API_HOST = 'https://connect.squareup.com';
 //TODO: ALL of location
 //TODO: ALL of customer card
 
-
-/**
- * HELLO WORLD
- */
-
 /* **********************************************************
  *     EXPORTS
  ************************************************************ */
