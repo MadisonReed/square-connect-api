@@ -1,5 +1,5 @@
 #Square Connect Node
-### Instantiate a SquareConnect client with the main export below, each instance method takes a callback as the last argument with standard (err, response) protocol
+### Instantiate a SquareConnect client with the main export below, each instance method takes a callback with standard (err, response) protocol
 ---------------------
 <a name="SquareConnect"></a>
 
@@ -66,7 +66,7 @@ Returns known Square Data for Merchant based on Auth Token
 
 | Param | Type | Description |
 | --- | --- | --- |
-| callback | <code>function</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#get-merchantid">API</a> |
+| callback | <code>function</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#get-merchantid">Read More</a> |
 
 <a name="SquareConnect+listLocations"></a>
 
@@ -77,7 +77,7 @@ Returns a list of all locations for this merchant
 
 | Param | Type | Description |
 | --- | --- | --- |
-| callback | <code>function</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#get-locations">API</a> |
+| callback | <code>function</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#get-locations">Read More</a> |
 
 <a name="SquareConnect+listRoles"></a>
 
@@ -88,7 +88,7 @@ Returns known Square Roles for Merchant based on Auth Token
 
 | Param | Type | Description |
 | --- | --- | --- |
-| callback | <code>function</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#navsection-roles">API</a> |
+| callback | <code>function</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#navsection-roles">Read More</a> |
 
 <a name="SquareConnect+getRole"></a>
 
@@ -99,7 +99,7 @@ Returns a role, queried by Id
 
 | Param | Type | Description |
 | --- | --- | --- |
-| roleId | <code>String</code> | Id of role to query <a href="https://docs.connect.squareup.com/api/connect/v1/#get-roleid">DETAILS</a> |
+| roleId | <code>String</code> | Id of role to query <a href="https://docs.connect.squareup.com/api/connect/v1/#get-roleid">Read More</a> |
 | callback | <code>function</code> |  |
 
 <a name="SquareConnect+createRole"></a>
@@ -136,7 +136,7 @@ Returns Employees based on location ID
 
 | Param | Type | Description |
 | --- | --- | --- |
-| callback | <code>function</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#get-employees">API</a> |
+| callback | <code>function</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#get-employees">Read More</a> |
 
 <a name="SquareConnect+getEmployee"></a>
 
@@ -147,7 +147,7 @@ Returns and Employee by employee Id
 
 | Param | Type | Description |
 | --- | --- | --- |
-| employeeId | <code>String</code> | Employee Id to Fetch <a href="https://docs.connect.squareup.com/api/connect/v1/#get-employeeid">API</a> |
+| employeeId | <code>String</code> | Employee Id to Fetch <a href="https://docs.connect.squareup.com/api/connect/v1/#get-employeeid">Read More</a> |
 | callback | <code>function</code> |  |
 
 <a name="SquareConnect+createEmployee"></a>
@@ -184,7 +184,7 @@ list Items based on location ID
 
 | Param | Type | Description |
 | --- | --- | --- |
-| callback | <code>function</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#get-items">API</a> |
+| callback | <code>function</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#get-items">Read More</a> |
 
 <a name="SquareConnect+createItem"></a>
 
@@ -207,7 +207,7 @@ Fetches an Item based on Item ID
 
 | Param | Type | Description |
 | --- | --- | --- |
-| itemId | <code>String</code> | item ID to fetch <a href="https://docs.connect.squareup.com/api/connect/v1/#get-itemid">API</a> |
+| itemId | <code>String</code> | item ID to fetch <a href="https://docs.connect.squareup.com/api/connect/v1/#get-itemid">Read More</a> |
 | callback | <code>function</code> |  |
 
 <a name="SquareConnect+updateItem"></a>
@@ -220,7 +220,7 @@ Updates an Item
 | Param | Type | Description |
 | --- | --- | --- |
 | itemId | <code>String</code> | Item ID to update |
-| data | <code>Object</code> | <a href-"https://docs.connect.squareup.com/api/connect/v1/#put-itemid">PROPERTIES</a> |
+| data | <code>Object</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#put-itemid">PROPERTIES</a> |
 | callback | <code>function</code> |  |
 
 <a name="SquareConnect+deleteItem"></a>
@@ -232,7 +232,7 @@ Deletes an Item
 
 | Param | Type | Description |
 | --- | --- | --- |
-| itemId | <code>String</code> | Item ID to delete  <a href="https://docs.connect.squareup.com/api/connect/v1/#delete-itemid">API</a> |
+| itemId | <code>String</code> | Item ID to delete  <a href="https://docs.connect.squareup.com/api/connect/v1/#delete-itemid">Read More</a> |
 | callback | <code>function</code> |  |
 
 <a name="SquareConnect+uploadItemImage"></a>
@@ -260,7 +260,7 @@ List Inventory of Items & Variations based on Location Id
 
 | Param | Type | Description |
 | --- | --- | --- |
-| callback | <code>function</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#get-inventory"></a> |
+| callback | <code>function</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#get-inventory">Read More</a> |
 
 <a name="SquareConnect+adjustInventory"></a>
 
@@ -284,7 +284,7 @@ list Categories based on location ID
 
 | Param | Type | Description |
 | --- | --- | --- |
-| callback | <code>function</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#get-categories"></a> |
+| callback | <code>function</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#get-categories">Read More</a> |
 
 <a name="SquareConnect+createCategory"></a>
 
@@ -320,7 +320,7 @@ Deletes a Category
 
 | Param | Type | Description |
 | --- | --- | --- |
-| categoryId | <code>String</code> | category ID to delete <a href="https://docs.connect.squareup.com/api/connect/v1/#delete-categoryid"></a> |
+| categoryId | <code>String</code> | category ID to delete <a href="https://docs.connect.squareup.com/api/connect/v1/#delete-categoryid">Read More</a> |
 | callback | <code>function</code> |  |
 
 <a name="SquareConnect+createVariation"></a>
@@ -360,7 +360,7 @@ Deletes a Variation for an Item
 | Param | Type | Description |
 | --- | --- | --- |
 | itemId | <code>String</code> | Item ID for referencing child Variation |
-| variationId | <code>String</code> | Variation ID to Delete <a href="https://docs.connect.squareup.com/api/connect/v1/#delete-variationid">API</a> |
+| variationId | <code>String</code> | Variation ID to Delete <a href="https://docs.connect.squareup.com/api/connect/v1/#delete-variationid">Read More</a> |
 | callback | <code>function</code> |  |
 
 <a name="SquareConnect+listCustomers"></a>
@@ -372,7 +372,7 @@ Lists Customers via instance Auth Token
 
 | Param | Type | Description |
 | --- | --- | --- |
-| callback | <code>function</code> | <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-listcustomers">API</a> |
+| callback | <code>function</code> | <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-listcustomers">Read More</a> |
 
 <a name="SquareConnect+getCustomer"></a>
 
@@ -383,7 +383,7 @@ Fetches a customer based on Customer ID
 
 | Param | Type | Description |
 | --- | --- | --- |
-| customerId | <code>String</code> | customer ID to fetch <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-retrievecustomer"></a> |
+| customerId | <code>String</code> | customer ID to fetch <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-retrievecustomer">Read More</a> |
 | callback | <code>function</code> |  |
 
 <a name="SquareConnect+createCustomer"></a>
@@ -420,7 +420,7 @@ Deletes a customer based on proviced Customer Id
 
 | Param | Type | Description |
 | --- | --- | --- |
-| customerId | <code>String</code> | Customer Id to Delete <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-deletecustomer">API</a> |
+| customerId | <code>String</code> | Customer Id to Delete <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-deletecustomer">Read More</a> |
 | callback | <code>function</code> |  |
 
 <a name="SquareConnect+listBankAccounts"></a>
@@ -432,7 +432,7 @@ Lists Bank Accounts for an Instance
 
 | Param | Type | Description |
 | --- | --- | --- |
-| callback | <code>function</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#get-bankaccounts">API</a> |
+| callback | <code>function</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#get-bankaccounts">Read More</a> |
 
 <a name="SquareConnect+getBankAccount"></a>
 
@@ -443,7 +443,7 @@ Fetches a Bank Account based on Id
 
 | Param | Type | Description |
 | --- | --- | --- |
-| bankAccountId | <code>String</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#get-bankaccountid">API</a> |
+| bankAccountId | <code>String</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#get-bankaccountid">Read More</a> |
 | callback | <code>function</code> |  |
 
 <a name="SquareConnect+listTransactions"></a>
@@ -467,7 +467,7 @@ Fetches a transaction based on Transaction ID
 
 | Param | Type | Description |
 | --- | --- | --- |
-| transactionId | <code>String</code> | transaction ID to fetch <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-retrievetransaction">API</a> |
+| transactionId | <code>String</code> | transaction ID to fetch <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-retrievetransaction">Read More</a> |
 | callback | <code>function</code> |  |
 
 <a name="SquareConnect+voidTransaction"></a>
@@ -479,7 +479,7 @@ Voids a transaction based on Transaction ID
 
 | Param | Type | Description |
 | --- | --- | --- |
-| transactionId | <code>String</code> | Transaction ID to void <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-voidtransaction">API</a> |
+| transactionId | <code>String</code> | Transaction ID to void <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-voidtransaction">Read More</a> |
 | callback | <code>function</code> |  |
 
 <a name="SquareConnect+chargeTransaction"></a>
@@ -503,7 +503,7 @@ Captures a transaction based on Transaction ID
 
 | Param | Type | Description |
 | --- | --- | --- |
-| transactionId | <code>String</code> | <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-capturetransaction">API</a> |
+| transactionId | <code>String</code> | <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-capturetransaction">Read More</a> |
 | callback | <code>function</code> |  |
 
 <a name="SquareConnect+listPayments"></a>
@@ -527,7 +527,7 @@ fetches a payment based on payment ID
 
 | Param | Type | Description |
 | --- | --- | --- |
-| paymentId | <code>String</code> | payment ID to fetch <a href="https://docs.connect.squareup.com/api/connect/v1/#get-paymentid">API</a> |
+| paymentId | <code>String</code> | payment ID to fetch <a href="https://docs.connect.squareup.com/api/connect/v1/#get-paymentid">Read More</a> |
 | callback | <code>function</code> |  |
 
 <a name="SquareConnect+getCustomerInfoFromReceipt"></a>
@@ -541,3 +541,4 @@ Extracts AID from customer receipt based on Url, only to be used for Card Transa
 | --- | --- | --- |
 | receiptUrl | <code>String</code> | URL of payment receipt |
 | callback | <code>function</code> |  |
+
