@@ -40,7 +40,7 @@ exports.getCustomer = function getCustomer(customerId, callback) {
 
 /**
  * Creates a customer based on provided data
- * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-createcustomer">PROPERTIES</a>
+ * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-createcustomer">Properties</a>
  * @param  {Function} callback
  */
 exports.createCustomer = function createCustomer(data, callback) {
@@ -52,7 +52,7 @@ exports.createCustomer = function createCustomer(data, callback) {
 /**
  * Updates a customer based on provided Customer ID and Customer Data
  * @param  {String}   customerId - Customer ID to update
- * @param  {Object}   data       <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-updatecustomer">PROPERTIES</a>
+ * @param  {Object}   data       <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-updatecustomer">Properties</a>
  * @param  {Function} callback
  */
 exports.updateCustomer = function updateCustomer(customerId, data, callback) {
@@ -77,7 +77,7 @@ exports.deleteCustomer = function deleteCustomer(customerId, callback) {
 /**
  * Creates a card for provided Customer Id
  * @param  {String}   customerId - Customer ID to add card
- * @param  {Object}   data       <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-createcustomercard">PROPERTIES</a>
+ * @param  {Object}   data       <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-createcustomercard">Properties</a>
  * @param  {Function} callback
  */
 exports.createCustomerCard = function createCustomerCard(customerId, data, callback) {
@@ -102,7 +102,7 @@ exports.deleteCustomerCard = function deleteCustomerCard(customerId, cardId, cal
 
 /**
  * lists transactions for a location, has various query parameters
- * @param  {Objects}  [queryParams] takes a query as a key:value object and will automatically construct the query string for Square <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-listtransactions">PROPERTIES</a>
+ * @param  {Objects}  [queryParams] takes a query as a key:value object and will automatically construct the query string for Square <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-listtransactions">Properties</a>
  * @param  {Function} callback [description]
  */
 exports.listTransactions = function listTransactions(queryParams, callback) {
@@ -149,7 +149,7 @@ exports.voidTransaction = function voidTransaction(transactionId, callback) {
 
 /**
  * Charges a transaction with provided data
- * @param  {Object}   data          <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-charge">PROPERTIES</a>
+ * @param  {Object}   data          <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-charge">Properties</a>
  * @param  {Function} callback
  */
 exports.chargeTransaction = function chargeTransaction(data, callback) {
@@ -182,7 +182,7 @@ exports.createRefund = function createRefund(transactionId, callback) {
 
 /**
  * Lists Refunds for an instance
- * @param  {Object}   [queryParams] takes a query as a key:value object and will automatically construct the query string for Square <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-listrefunds">PROPERTIES</a>
+ * @param  {Object}   [queryParams] takes a query as a key:value object and will automatically construct the query string for Square <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-listrefunds">Properties</a>
  * @param  {Function} callback
  */
 exports.listRefunds = function listRefunds(queryParams, callback) {

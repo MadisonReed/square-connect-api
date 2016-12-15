@@ -1,8 +1,8 @@
 /* **********************************************************
  *    API V1
  ************************************************************ */
+ //TODO: CHECK V2, must add queryParams to all list methods!!!!!!!!!!
  //V1
- //TODO: ALL of timecards
  //TODO: ALL of drawer shifts
  //TODO: ALL of settlements
  //TODO: ALL of refunds
@@ -39,7 +39,7 @@ exports.listLocations = function listLocations(callback) {
 // ----------------------------------------------------------
 const ROLE_ROUTE = '/v1/me/roles';
 /**
- * Returns known Square Roles for Merchant based on Auth Token
+ * Returns known Square Roles for Merchant based on Instance Auth Token
  * @param  {Function} callback <a href="https://docs.connect.squareup.com/api/connect/v1/#navsection-roles">Read More</a>
  */
 exports.listRoles = function listRoles(callback) {
@@ -57,7 +57,7 @@ exports.getRole = function getRole(roleId, callback) {
 
 /**
  * Creates a Role
- * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v1/#post-roles">PROPERTIES</a>
+ * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v1/#post-roles">Properties</a>
  * @param  {Function} callback
  */
 exports.createRole = function createRole(data, callback) {
@@ -67,7 +67,7 @@ exports.createRole = function createRole(data, callback) {
 /**
  * Updates a Role based on roleId and provided data
  * @param  {String}   roleId   Role Id to Update
- * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v1/#put-roleid">PROPERTIES</a>
+ * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v1/#put-roleid">Properties</a>
  * @param  {Function} callback
  */
 exports.updateRole = function updateRole(roleId, data, callback) {
@@ -79,11 +79,23 @@ exports.updateRole = function updateRole(roleId, data, callback) {
 // ----------------------------------------------------------
 
 /**
- * Returns Employees based on location ID
+ * Returns Employees based on Instande Location Id
  * @param  {Function} callback <a href="https://docs.connect.squareup.com/api/connect/v1/#get-employees">Read More</a>
  */
-exports.listEmployees = function listEmployees(callback) {
-  this.handleRequest(this.constructOpts(`${MERCHANT_ROUTE}/employees`), callback);
+exports.listEmployees = function listEmployees(queryParams, callback) {
+  callback = Array.prototype.pop.call(arguments);
+  switch (arguments.length) {
+    case 1:
+      queryParams = null;
+  }
+
+  var queryString = '';
+
+  if (queryParams) {
+    queryString = constructQueryString(queryParams);
+  }
+
+  this.handleRequest(this.constructOpts(`${MERCHANT_ROUTE}/employees${queryString}`), callback);
 }
 
 /**
@@ -132,7 +144,7 @@ exports.listItems = function listItems(callback) {
 
 /**
  * Creates an Item
- * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v1/#post-items">PROPERTIES</a>
+ * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v1/#post-items">Properties</a>
  * @param  {Function} callback
  */
 exports.createItem = function createItem(data, callback) {
@@ -153,7 +165,7 @@ exports.getItem = function getItem(itemId, callback) {
 /**
  * Updates an Item
  * @param  {String}   itemId   Item ID to update
- * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v1/#put-itemid">PROPERTIES</a>
+ * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v1/#put-itemid">Properties</a>
  * @param  {Function} callback
  */
 exports.updateItem = function updateItem(itemId, data, callback) {
@@ -233,7 +245,7 @@ exports.uploadItemImage = function uploadItemImage(itemId, imageUrl, imageExtens
 
 /**
  * List Inventory of Items & Variations based on Location Id
- * @param  {Object}   [queryParams] takes a query as a key:value object and will automatically construct the query string for Square <a href="https://docs.connect.squareup.com/api/connect/v1/#get-inventory">PROPERTIES</a>
+ * @param  {Object}   [queryParams] takes a query as a key:value object and will automatically construct the query string for Square <a href="https://docs.connect.squareup.com/api/connect/v1/#get-inventory">Properties</a>
  * @param  {Function} callback
  */
 exports.listInventory = function listInventory(queryParams, callback) {
@@ -249,13 +261,13 @@ exports.listInventory = function listInventory(queryParams, callback) {
     queryString = constructQueryString(queryParams);
   }
 
-  this.handleRequest(this.constructOpts(`/v1/${this.locationId}/inventory${queryParams}`), callback);
+  this.handleRequest(this.constructOpts(`/v1/${this.locationId}/inventory${queryString}`), callback);
 }
 
 /**
  * Adjusts inventory for a variation
  * @param  {String}   variationId - variation Id to adjust/update
- * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v1/#post-inventory-variationid">PROPERTIES</a>
+ * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v1/#post-inventory-variationid">Properties</a>
  * @param  {Function} callback
  */
 exports.adjustInventory = function adjustInventory(variationId, data, callback) {
@@ -278,7 +290,7 @@ exports.listCategories = function listCategories(callback) {
 
 /**
  * Creates a Category
- * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v1/#post-categories">PROPERTIES</a>
+ * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v1/#post-categories">Properties</a>
  * @param  {Function} callback
  */
 exports.createCategory = function createCategory(data, callback) {
@@ -290,7 +302,7 @@ exports.createCategory = function createCategory(data, callback) {
 /**
  * Updates a Category based on provided Category Id and Data
  * @param  {String}   categoryId - Category Id to update
- * @param  {Object}   data       <a href="https://docs.connect.squareup.com/api/connect/v1/#put-categoryid">PROPERTIES</a>
+ * @param  {Object}   data       <a href="https://docs.connect.squareup.com/api/connect/v1/#put-categoryid">Properties</a>
  * @param  {Function} callback
  */
 exports.updateCategory = function updateCategory(categoryId, data, callback) {
@@ -315,7 +327,7 @@ exports.deleteCategory = function deleteCategory(categoryId, callback) {
 /**
  * Creates a Variation for an already created Item
  * @param  {String}   itemId   Item ID to create the Variation for
- * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v1/#post-variations">PROPERTIES</a>
+ * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v1/#post-variations">Properties</a>
  * @param  {Function} callback
  */
 exports.createVariation = function createVariation(itemId, data, callback) {
@@ -328,7 +340,7 @@ exports.createVariation = function createVariation(itemId, data, callback) {
  * Updates a Variation for an already created Item and Variation
  * @param  {String}   itemId   Item ID for referencing child Variation
  * @param  {String}   variationId   Variation ID to update the Variation for
- * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v1/#put-variationid">PROPERTIES</a>
+ * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v1/#put-variationid">Properties</a>
  * @param  {Function} callback
  */
 exports.updateVariation = function updateVariation(itemId, variationId, data, callback) {
@@ -374,7 +386,7 @@ exports.getBankAccount = function getBankAccount(bankAccountId, callback) {
 
 /**
  * lists payments based on instance location ID, has various query parameters
- * @param  {Object}   [queryParams] takes a query as a key:value object and will automatically construct the query string for Square <a href="https://docs.connect.squareup.com/api/connect/v1/#get-payments">PROPERTIES</a>
+ * @param  {Object}   [queryParams] takes a query as a key:value object and will automatically construct the query string for Square <a href="https://docs.connect.squareup.com/api/connect/v1/#get-payments">Properties</a>
  * @param  {Function} callback
  */
 exports.listPayments = function listPayments(queryParams, callback) {
@@ -415,4 +427,103 @@ exports.getPayment = function getPayment(paymentId, callback) {
 
     callback(null, result);
   });
+}
+
+// ----------------------------------------------------------
+//    Timecard Methods
+// ----------------------------------------------------------
+
+const TIMECARD_ROUTE = '/v1/me/timecards';
+
+/**
+ * Lists timecards for an instance
+ * @param  {Function} callback <a href="https://docs.connect.squareup.com/api/connect/v1/#get-timecards">Read More</a>
+ */
+exports.listTimecards = function listTimecards(callback) {
+  this.handleRequest(this.constructOpts(TIMECARD_ROUTE), callback);
+}
+
+/**
+ * Gets a timecard based on Timecard Id
+ * @param  {String}   timecardId Timecard Id to fetch
+ * @param  {Function} callback <a href="https://docs.connect.squareup.com/api/connect/v1/#get-timecardid">Read More</a>
+ */
+exports.getTimecard = function getTimecard(timecardId, callback) {
+  this.handleRequest(this.constructOpts(`${TIMECARD_ROUTE}/${timecardId}`), callback);
+}
+
+/**
+ * Creates a timecard for an employee
+ * @param  {Object}   data - takes data as a key:value object <a href="https://docs.connect.squareup.com/api/connect/v1/#post-timecards">Properties</a>
+ * @param  {Function} callback
+ */
+exports.createTimecard = function createTimecard(data, callback) {
+  var opts = this.constructOpts('POST', TIMECARD_ROUTE);
+  opts.json = data;
+  this.handleRequest(opts, callback);
+}
+
+/**
+ * Updates a timecard, takes in Timecard Id and Data Object
+ * @param  {String}   timecardId - Timecard Id to update
+ * @param  {Object}   data       <a href="https://docs.connect.squareup.com/api/connect/v1/#put-timecardid">Properties</a>
+ * @param  {Function} callback
+ */
+exports.updateTimecard = function updateTimecard(timecardId, data, callback) {
+  var opts = this.constructOpts('PUT', `${TIMECARD_ROUTE}/${timecardId}`);
+  opts.json = data;
+  this.handleRequest(opts, callback);
+}
+
+/**
+ * Deletes a timecard
+ * @param  {String}   timecardId - Id of Timecard to delete
+ * @param  {Function} callback <a href="https://docs.connect.squareup.com/api/connect/v1/#delete-timecardid">Read More</a>
+ */
+exports.deleteTimecard = function deleteTimecard(timecardId, callback) {
+  this.handleRequest(this.constructOpts('DELETE', `${TIMECARD_ROUTE}/${timecardId}`), callback);
+}
+
+/**
+ * Lists all known events for a timecard
+ * @param  {String}   timecardId - Id of timecard to look up
+ * @param  {Function} callback <a href="https://docs.connect.squareup.com/api/connect/v1/#get-events">Read More</a>
+ */
+exports.listTimecardEvents = function listTimecardEvents(timecardId, callback) {
+  this.handleRequest(this.constructOpts(`${TIMECARD_ROUTE}/${timecardId}/events`), callback);
+}
+
+// ----------------------------------------------------------
+//    Drawer Shift Methods
+// ----------------------------------------------------------
+
+/**
+ * Lists all Cash Drawer Shifts for an instance, takes optional parameters
+ * @param  {Object}   [queryParams] takes a query as a key:value object and will automatically construct the query string for Square <a href="https://docs.connect.squareup.com/api/connect/v1/#get-cashdrawershifts">Properties</a>
+ * @param  {Function} callback
+ */
+exports.listCashDrawerShifts = function listCashDrawerShifts(queryParams, callback) {
+  callback = Array.prototype.pop.call(arguments);
+
+  switch (arguments.length) {
+    case 1:
+      queryParams = null;
+  }
+
+  var queryString = '';
+
+  if (queryParams) {
+    queryString = constructQueryString(queryParams);
+  }
+
+  this.handleRequest(this.constructOpts(`/v1/${this.locationId}/cash-drawer-shifts${queryString}`), callback);
+}
+
+/**
+ * Gets Cash Drawer Details for a provided Shift Id
+ * @param  {String}   shiftId  Shift Id to fetch
+ * @param  {Function} callback <a href="https://docs.connect.squareup.com/api/connect/v1/#get-cashdrawershiftid">Read More</a>
+ */
+exports.getCashDrawerShift = function getCashDrawerShift(shiftId, callback) {
+  this.handleRequest(this.constructOpts(`/v1/${this.locationId}/cash-drawer-shifts/${shiftId}`), callback);
 }
