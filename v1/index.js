@@ -2,11 +2,8 @@
  *    API V1
  ************************************************************ */
  //V1
- //TODO: ALL of orders
  //TODO: ALL of discounts
  //TODO: ALL of fees
- //TODO: ALL of pages
- //TODO: ALL of cells
  //TODO: ALL of modifier lists
  //TODO: ALL of modifier options
 
@@ -36,7 +33,7 @@ exports.listLocations = function listLocations(callback) {
 const ROLE_ROUTE = '/v1/me/roles';
 /**
  * Returns known Square Roles for Merchant based on Instance Auth Token
- * @param  {Object}   [queryParams] takes a query as a key:value object and will automatically construct the query string for Square <a href="https://docs.connect.squareup.com/api/connect/v1/#get-roles">Properties</a>
+ * @param  {Object}   [queryParams] takes a query as a key:value object and will automatically construct the query string for Square. -  <a href="https://docs.connect.squareup.com/api/connect/v1/#get-roles">Properties</a>
  * @param  {Function} callback
  */
 exports.listRoles = function listRoles(queryParams, callback) {
@@ -83,8 +80,8 @@ exports.updateRole = function updateRole(roleId, data, callback) {
 // ----------------------------------------------------------
 
 /**
- * Returns Employees based on Instande Location Id
- * @param  {Object}   [queryParams] takes a query as a key:value object and will automatically construct the query string for Square <a href="https://docs.connect.squareup.com/api/connect/v1/#get-employees">Properties</a>
+ * Returns Employees based on Instance Location Id
+ * @param  {Object}   [queryParams] takes a query as a key:value object and will automatically construct the query string for Square. -  <a href="https://docs.connect.squareup.com/api/connect/v1/#get-employees">Properties</a>
  * @param  {Function} callback
  */
 exports.listEmployees = function listEmployees(queryParams, callback) {
@@ -245,7 +242,7 @@ exports.uploadItemImage = function uploadItemImage(itemId, imageUrl, imageExtens
 
 /**
  * List Inventory of Items & Variations based on Location Id
- * @param  {Object}   [queryParams] takes a query as a key:value object and will automatically construct the query string for Square <a href="https://docs.connect.squareup.com/api/connect/v1/#get-inventory">Properties</a>
+ * @param  {Object}   [queryParams] takes a query as a key:value object and will automatically construct the query string for Square. -  <a href="https://docs.connect.squareup.com/api/connect/v1/#get-inventory">Properties</a>
  * @param  {Function} callback
  */
 exports.listInventory = function listInventory(queryParams, callback) {
@@ -355,6 +352,47 @@ exports.deleteVariation = function deleteVariation(itemId, variationId, callback
 }
 
 // ----------------------------------------------------------
+//    Order Methods
+// ----------------------------------------------------------
+
+/**
+ * Lists orders for an instance, takes various query parameters
+ * @param  {Object}   [queryParams] takes a query as a key:value object and will automatically construct the query string for Square. -  <a href="https://docs.connect.squareup.com/api/connect/v1/#get-orders">Properties</a>
+ * @param  {Function} callback
+ */
+exports.listOrders = function listOrders(queryParams, callback) {
+  callback = Array.prototype.pop.call(arguments);
+  switch (arguments.length) {
+    case 1:
+      queryParams = null;
+  }
+
+  var queryString = constructQueryString(queryParams);
+  this.handleRequest(this.constructOpts(`/v1/${this.locationId}/orders`), callback);
+}
+
+/**
+ * Fetches an Order based on Order Id
+ * @param  {String}   orderId  - Order Id to fetch
+ * @param  {Function} callback
+ */
+exports.getOrder = function getOrder(orderId, callback) {
+  this.handleRequest(this.constructOpts(`/v1/${this.locationId}/orders/${orderId}`), callback);
+}
+
+/**
+ * Updates an order based on Order Id and provided Data
+ * @param  {String}   orderId  - Order Id to Update
+ * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v1/#put-orderid">Properties</a>
+ * @param  {Function} callback
+ */
+exports.updateOrder = function updateOrder(orderId, data, callback) {
+  var opts = this.constructOpts('PUT', `/v1/${this.locationId}/orders/${orderId}`);
+  opts.json = data;
+  this.handleRequest(opts, callback);
+}
+
+// ----------------------------------------------------------
 //    Bank Account Methods
 // ----------------------------------------------------------
 
@@ -381,7 +419,7 @@ exports.getBankAccount = function getBankAccount(bankAccountId, callback) {
 
 /**
  * lists payments based on instance location ID, has various query parameters
- * @param  {Object}   [queryParams] takes a query as a key:value object and will automatically construct the query string for Square <a href="https://docs.connect.squareup.com/api/connect/v1/#get-payments">Properties</a>
+ * @param  {Object}   [queryParams] takes a query as a key:value object and will automatically construct the query string for Square. -  <a href="https://docs.connect.squareup.com/api/connect/v1/#get-payments">Properties</a>
  * @param  {Function} callback
  */
 exports.listPayments = function listPayments(queryParams, callback) {
@@ -488,7 +526,7 @@ exports.listTimecardEvents = function listTimecardEvents(timecardId, callback) {
 
 /**
  * Lists all Cash Drawer Shifts for an instance, takes optional parameters
- * @param  {Object}   [queryParams] takes a query as a key:value object and will automatically construct the query string for Square <a href="https://docs.connect.squareup.com/api/connect/v1/#get-cashdrawershifts">Properties</a>
+ * @param  {Object}   [queryParams] takes a query as a key:value object and will automatically construct the query string for Square. -  <a href="https://docs.connect.squareup.com/api/connect/v1/#get-cashdrawershifts">Properties</a>
  * @param  {Function} callback
  */
 exports.listCashDrawerShifts = function listCashDrawerShifts(queryParams, callback) {
@@ -517,7 +555,7 @@ exports.getCashDrawerShift = function getCashDrawerShift(shiftId, callback) {
 
 /**
  * lists Settlements based on instance location ID, has various query parameters
- * @param  {Object}   [queryParams] takes a query as a key:value object and will automatically construct the query string for Square <a href="https://docs.connect.squareup.com/api/connect/v1/#get-settlements">Properties</a>
+ * @param  {Object}   [queryParams] takes a query as a key:value object and will automatically construct the query string for Square. -  <a href="https://docs.connect.squareup.com/api/connect/v1/#get-settlements">Properties</a>
  * @param  {Function} callback
  */
 exports.listSettlements = function listSettlements(queryParams, callback) {
@@ -546,7 +584,7 @@ exports.getSettlement = function getSettlement(settlementId, callback) {
 
 /**
  * lists Refunds based on instance location ID, has various query parameters
- * @param  {Object}   [queryParams] takes a query as a key:value object and will automatically construct the query string for Square <a href="https://docs.connect.squareup.com/api/connect/v1/#get-refunds">Properties</a>
+ * @param  {Object}   [queryParams] takes a query as a key:value object and will automatically construct the query string for Square. -  <a href="https://docs.connect.squareup.com/api/connect/v1/#get-refunds">Properties</a>
  * @param  {Function} callback
  */
 exports.listRefunds = function listRefunds(queryParams, callback) {
@@ -569,4 +607,78 @@ exports.createRefund = function createRefund(data, callback) {
   var opts = this.constructOpts('POST', `/v1/${this.locationId}/refunds`);
   opts.json = data;
   this.handleRequest(opts, callback);
+}
+
+
+// ------------------------------------------------------------------------------------------------------------------------------------
+//                                                          Kiosk UI Methods
+// ------------------------------------------------------------------------------------------------------------------------------------
+
+// ----------------------------------------------------------
+//    Page Methods
+// ----------------------------------------------------------
+
+/**
+ * Lists all pages for an Instace Location
+ * @param  {Function} callback <a href="https://docs.connect.squareup.com/api/connect/v1/#get-pages">Read More</a>
+ */
+exports.listPages = function listPages(callback) {
+  this.handleRequest(this.constructOpts(`/v1/${this.locationId}/pages`), callback);
+}
+
+/**
+ * Creates a new Page with provided Data
+ * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v1/#post-pages">Properties</a>
+ * @param  {Function} callback
+ */
+exports.createPage = function createPage(data, callback) {
+  var opts = this.constructOpts('POST', `/v1/${this.locationId}/pages`);
+  opts.json = data;
+  this.handleRequest(opts, callback);
+}
+
+/**
+ * Updates a Page based on provided Page Id and Data
+ * @param  {String}   pageId   Page Id to Update
+ * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v1/#put-pageid">Properties</a>
+ * @param  {Function} callback
+ */
+exports.updatePage = function updatePage(pageId, data, callback) {
+  var opts = this.constructOpts('PUT', `/v1/${this.locationId}/pages/${pageId}`);
+  opts.json = data;
+  this.handleRequest(opts, callback);
+}
+
+/**
+ * Deletes a Page based on provided Page Id
+ * @param  {String}   pageId   Page Id to Delete
+ * @param  {Function} callback <a href="https://docs.connect.squareup.com/api/connect/v1/#delete-pageid">Read More</a>
+ */
+exports.deletePage = function deletePage(pageId, callback) {
+  this.handleRequest(this.constructOpts('DELETE', `/v1/${this.locationId}/pages/${pageId}`), callback);
+}
+
+// ----------------------------------------------------------
+//    Cell Methods
+// ----------------------------------------------------------
+
+/**
+ * Updates Cell Structure for a provided Page Id
+ * @param  {String}   pageId   - Page Id to Update
+ * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v1/#put-cells">Properties</a>
+ * @param  {Function} callback
+ */
+exports.updateCell = function updateCells(pageId, data, callback) {
+  var opts = this.constructOpts('PUT', `/v1/${this.locationId}/pages/${pageId}`);
+  opts.json = data;
+  this.handleRequest(opts, callback);
+}
+
+/**
+ * Delete all Cells on a page for provided Page Id
+ * @param  {String}   pageId   - Page Id to Delete cells from
+ * @param  {Function} callback
+ */
+exports.deleteCell = function deleteCells(pageId, callback) {
+  this.handleRequest(this.constructOpts('DELETE', `/v1/${this.locationId}/pages/${pageId}`), callback);
 }
