@@ -23,10 +23,18 @@ exports.v2listLocations = function v2listLocations(callback) {
 const CUSTOMER_ROUTE = '/v2/customers';
 /**
  * Lists Customers via instance Auth Token
- * @param  {Function} callback <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-listcustomers">Read More</a>
+ * @param  {Object}  [queryParams] takes a query as a key:value object and will automatically construct the query string for Square <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-listcustomers">>Properties</a>
+ * @param  {Function} callback
  */
-exports.listCustomers = function listCustomers(callback) {
-  this.handleRequest(this.constructOpts(CUSTOMER_ROUTE), callback);
+exports.listCustomers = function listCustomers(queryParams, callback) {
+  callback = Array.prototype.pop.call(arguments);
+  switch (arguments.length) {
+    case 1:
+      queryParams = null;
+  }
+
+  var queryString = utils.constructQueryString(queryParams);
+  this.handleRequest(this.constructOpts(`${CUSTOMER_ROUTE}${queryParams}`), callback);
 }
 
 /**
@@ -102,23 +110,17 @@ exports.deleteCustomerCard = function deleteCustomerCard(customerId, cardId, cal
 
 /**
  * lists transactions for a location, has various query parameters
- * @param  {Objects}  [queryParams] takes a query as a key:value object and will automatically construct the query string for Square <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-listtransactions">Properties</a>
+ * @param  {Object}  [queryParams] takes a query as a key:value object and will automatically construct the query string for Square <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-listtransactions">Properties</a>
  * @param  {Function} callback [description]
  */
 exports.listTransactions = function listTransactions(queryParams, callback) {
   callback = Array.prototype.pop.call(arguments);
-
   switch (arguments.length) {
     case 1:
       queryParams = null;
   }
 
-  var queryString = '';
-
-  if (queryParams) {
-    queryString = utils.constructQueryString(queryParams);
-  }
-
+  var queryString = utils.constructQueryString(queryParams);
   this.handleRequest(this.constructOpts('GET', `/v2/locations/${this.locationId}/transactions${queryString}`), (err, result) => {
     /* istanbul ignore if */
     if (err) {
@@ -187,17 +189,11 @@ exports.createRefund = function createRefund(transactionId, callback) {
  */
 exports.listRefunds = function listRefunds(queryParams, callback) {
   callback = Array.prototype.pop.call(arguments);
-
   switch (arguments.length) {
     case 1:
       queryParams = null;
   }
 
-  var queryString = '';
-
-  if (queryParams) {
-    queryString = utils.constructQueryString(queryParams);
-  }
-
+  var queryString = utils.constructQueryString(queryParams);
   this.handleRequest(this.constructOpts(`/v2/locations/${this.locationId}/refunds${queryString}`), callback);
 }

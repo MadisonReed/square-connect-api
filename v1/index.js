@@ -1,11 +1,7 @@
 /* **********************************************************
  *    API V1
  ************************************************************ */
- //TODO: CHECK V2, must add queryParams to all list methods!!!!!!!!!!
  //V1
- //TODO: ALL of drawer shifts
- //TODO: ALL of settlements
- //TODO: ALL of refunds
  //TODO: ALL of orders
  //TODO: ALL of discounts
  //TODO: ALL of fees
@@ -15,7 +11,7 @@
  //TODO: ALL of modifier options
 
 // ----------------------------------------------------------
-//    Main Instance Methods
+//    Main Merchant Methods
 // ----------------------------------------------------------
 const MERCHANT_ROUTE = '/v1/me';
 /**
@@ -40,10 +36,18 @@ exports.listLocations = function listLocations(callback) {
 const ROLE_ROUTE = '/v1/me/roles';
 /**
  * Returns known Square Roles for Merchant based on Instance Auth Token
- * @param  {Function} callback <a href="https://docs.connect.squareup.com/api/connect/v1/#navsection-roles">Read More</a>
+ * @param  {Object}   [queryParams] takes a query as a key:value object and will automatically construct the query string for Square <a href="https://docs.connect.squareup.com/api/connect/v1/#get-roles">Properties</a>
+ * @param  {Function} callback
  */
-exports.listRoles = function listRoles(callback) {
-  this.handleRequest(this.constructOpts(ROLE_ROUTE), callback);
+exports.listRoles = function listRoles(queryParams, callback) {
+  callback = Array.prototype.pop.call(arguments);
+  switch (arguments.length) {
+    case 1:
+      queryParams = null;
+  }
+
+  var queryString = constructQueryString(queryParams);
+  this.handleRequest(this.constructOpts(`${ROLE_ROUTE}${queryParams}`), callback);
 }
 
 /**
@@ -80,7 +84,8 @@ exports.updateRole = function updateRole(roleId, data, callback) {
 
 /**
  * Returns Employees based on Instande Location Id
- * @param  {Function} callback <a href="https://docs.connect.squareup.com/api/connect/v1/#get-employees">Read More</a>
+ * @param  {Object}   [queryParams] takes a query as a key:value object and will automatically construct the query string for Square <a href="https://docs.connect.squareup.com/api/connect/v1/#get-employees">Properties</a>
+ * @param  {Function} callback
  */
 exports.listEmployees = function listEmployees(queryParams, callback) {
   callback = Array.prototype.pop.call(arguments);
@@ -89,12 +94,7 @@ exports.listEmployees = function listEmployees(queryParams, callback) {
       queryParams = null;
   }
 
-  var queryString = '';
-
-  if (queryParams) {
-    queryString = constructQueryString(queryParams);
-  }
-
+  var queryString = constructQueryString(queryParams);
   this.handleRequest(this.constructOpts(`${MERCHANT_ROUTE}/employees${queryString}`), callback);
 }
 
@@ -255,12 +255,7 @@ exports.listInventory = function listInventory(queryParams, callback) {
       queryParams = null;
   }
 
-  var queryString = '';
-
-  if (queryParams) {
-    queryString = constructQueryString(queryParams);
-  }
-
+  var queryString = constructQueryString(queryParams);
   this.handleRequest(this.constructOpts(`/v1/${this.locationId}/inventory${queryString}`), callback);
 }
 
@@ -391,18 +386,12 @@ exports.getBankAccount = function getBankAccount(bankAccountId, callback) {
  */
 exports.listPayments = function listPayments(queryParams, callback) {
   callback = Array.prototype.pop.call(arguments);
-
   switch (arguments.length) {
     case 1:
       queryParams = null;
   }
 
-  var queryString = '';
-
-  if (queryParams) {
-    queryString = constructQueryString(queryParams);
-  }
-
+  var queryString = constructQueryString(queryParams);
   this.handleRequest(this.constructOpts('GET', `/v1/${this.locationId}/payments${queryString}`), (err, result) => {
     /* istanbul ignore if */
     if (err) {
@@ -504,18 +493,12 @@ exports.listTimecardEvents = function listTimecardEvents(timecardId, callback) {
  */
 exports.listCashDrawerShifts = function listCashDrawerShifts(queryParams, callback) {
   callback = Array.prototype.pop.call(arguments);
-
   switch (arguments.length) {
     case 1:
       queryParams = null;
   }
 
-  var queryString = '';
-
-  if (queryParams) {
-    queryString = constructQueryString(queryParams);
-  }
-
+  var queryString = constructQueryString(queryParams);
   this.handleRequest(this.constructOpts(`/v1/${this.locationId}/cash-drawer-shifts${queryString}`), callback);
 }
 
@@ -526,4 +509,64 @@ exports.listCashDrawerShifts = function listCashDrawerShifts(queryParams, callba
  */
 exports.getCashDrawerShift = function getCashDrawerShift(shiftId, callback) {
   this.handleRequest(this.constructOpts(`/v1/${this.locationId}/cash-drawer-shifts/${shiftId}`), callback);
+}
+
+// ----------------------------------------------------------
+//    Settlement Methods
+// ----------------------------------------------------------
+
+/**
+ * lists Settlements based on instance location ID, has various query parameters
+ * @param  {Object}   [queryParams] takes a query as a key:value object and will automatically construct the query string for Square <a href="https://docs.connect.squareup.com/api/connect/v1/#get-settlements">Properties</a>
+ * @param  {Function} callback
+ */
+exports.listSettlements = function listSettlements(queryParams, callback) {
+  callback = Array.prototype.pop.call(arguments);
+  switch (arguments.length) {
+    case 1:
+      queryParams = null;
+  }
+
+  var queryString = constructQueryString(queryParams);
+  this.handleRequest(this.constructOpts(`/v1/${this.locationId}/settlements`), callback);
+}
+
+/**
+ * Fetches a Settlement based on Id
+ * @param  {String}   settlementId - Settlement Id to Fetch
+ * @param  {Function} callback <a href="https://docs.connect.squareup.com/api/connect/v1/#get-settlementid">Read More</a>
+ */
+exports.getSettlement = function getSettlement(settlementId, callback) {
+  this.handleRequest(this.constructOpts(`/v1/${this.locationId}/settlements/${settlementId}`), callback);
+}
+
+// ----------------------------------------------------------
+//    Refund Methods
+// ----------------------------------------------------------
+
+/**
+ * lists Refunds based on instance location ID, has various query parameters
+ * @param  {Object}   [queryParams] takes a query as a key:value object and will automatically construct the query string for Square <a href="https://docs.connect.squareup.com/api/connect/v1/#get-refunds">Properties</a>
+ * @param  {Function} callback
+ */
+exports.listRefunds = function listRefunds(queryParams, callback) {
+  callback = Array.prototype.pop.call(arguments);
+  switch (arguments.length) {
+    case 1:
+      queryParams = null;
+  }
+
+  var queryString = constructQueryString(queryParams);
+  this.handleRequest(this.constructOpts(`/v1/${this.locationId}/refunds`), callback);
+}
+
+/**
+ * Creates a refund
+ * @param  {Object}   data     <a href="https://docs.connect.squareup.com/api/connect/v1/#post-refunds">Properties</a>
+ * @param  {Function} callback
+ */
+exports.createRefund = function createRefund(data, callback) {
+  var opts = this.constructOpts('POST', `/v1/${this.locationId}/refunds`);
+  opts.json = data;
+  this.handleRequest(opts, callback);
 }
