@@ -23,7 +23,7 @@ exports.v2listLocations = function v2listLocations(callback) {
 const CUSTOMER_ROUTE = '/v2/customers';
 /**
  * Lists Customers via instance Auth Token
- * @param  {Object}  [queryParams] takes a query as a key:value object and will automatically construct the query string for Square <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-listcustomers">>Properties</a>
+ * @param  {Object}  [queryParams] takes a query as a key:value object and will automatically construct the query string for Square. -  <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-listcustomers">>Properties</a>
  * @param  {Function} callback
  */
 exports.listCustomers = function listCustomers(queryParams, callback) {
@@ -34,7 +34,7 @@ exports.listCustomers = function listCustomers(queryParams, callback) {
   }
 
   var queryString = utils.constructQueryString(queryParams);
-  this.handleRequest(this.constructOpts(`${CUSTOMER_ROUTE}${queryParams}`), callback);
+  this.handleRequest(this.constructOpts(`${CUSTOMER_ROUTE}${queryString}`), callback);
 }
 
 /**
@@ -110,7 +110,7 @@ exports.deleteCustomerCard = function deleteCustomerCard(customerId, cardId, cal
 
 /**
  * lists transactions for a location, has various query parameters
- * @param  {Object}  [queryParams] takes a query as a key:value object and will automatically construct the query string for Square <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-listtransactions">Properties</a>
+ * @param  {Object}  [queryParams] takes a query as a key:value object and will automatically construct the query string for Square. -  <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-listtransactions">Properties</a>
  * @param  {Function} callback [description]
  */
 exports.listTransactions = function listTransactions(queryParams, callback) {
@@ -184,7 +184,7 @@ exports.createRefund = function createRefund(transactionId, callback) {
 
 /**
  * Lists Refunds for an instance
- * @param  {Object}   [queryParams] takes a query as a key:value object and will automatically construct the query string for Square <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-listrefunds">Properties</a>
+ * @param  {Object}   [queryParams] takes a query as a key:value object and will automatically construct the query string for Square. -  <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-listrefunds">Properties</a>
  * @param  {Function} callback
  */
 exports.listRefunds = function listRefunds(queryParams, callback) {

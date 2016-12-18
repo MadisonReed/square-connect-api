@@ -14,10 +14,10 @@
     "square-node"
   ],
   "author": {
-   "name": "Michael Walker",
-   "email": "cmichaelswalker@gmail.com"
- },
- "contributors": [
+    "name": "Michael Walker",
+    "email": "cmichaelswalker@gmail.com"
+  },
+  "contributors": [
     {
       "name": "Michael Walker",
       "email": "cmichaelswalker@gmail.com"
@@ -26,10 +26,10 @@
   "license": "MIT",
   "dependencies": {
     "async": "^2.1.4",
-    "cheerio": "^0.22.0",
     "request": "^2.79.0"
   },
   "devDependencies": {
+    "eslint": "^3.12.2",
     "jsdoc-to-markdown": "^2.0.1"
   }
 }

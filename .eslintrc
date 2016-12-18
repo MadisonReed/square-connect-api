@@ -1,0 +1,38 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "rules": {
+    "curly": 2,
+    "dot-notation": 0,
+    "comma-style": [
+      2,
+      "last"
+    ],
+    "no-unused-expressions": 2,
+    "no-unused-vars": [
+      "error",
+      {
+        "vars": "all",
+        "args": "after-used",
+        "varsIgnorePattern": "config"
+      }
+    ],
+    "quotes": [2, "single", {"avoidEscape": true, "allowTemplateLiterals": true}],
+    "no-trailing-spaces": "error",
+    "semi": ["error", "always"],
+    "brace-style": "error",
+    "keyword-spacing": ["error", { "after": true, "before": true }],
+    "comma-dangle": ["error", "never"],
+    "no-console": "error",
+    "no-debugger": "error",
+    "no-unreachable": "error",
+    "no-dupe-args": "error",
+    "no-dupe-keys": "error",
+    "no-func-assign": "error",
+    "no-sparse-arrays": "error",
+    "space-before-blocks": "error"
+  }
+}

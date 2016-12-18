@@ -38,6 +38,30 @@
 <dt><a href="#updateEmployee">updateEmployee(squareEmployeeId, data, callback)</a></dt>
 <dd><p>Update Employee based on employee ID</p>
 </dd>
+<dt><a href="#listTimecards">listTimecards(callback)</a></dt>
+<dd><p>Lists timecards for an instance</p>
+</dd>
+<dt><a href="#getTimecard">getTimecard(timecardId, callback)</a></dt>
+<dd><p>Gets a timecard based on Timecard Id</p>
+</dd>
+<dt><a href="#createTimecard">createTimecard(data, callback)</a></dt>
+<dd><p>Creates a timecard for an employee</p>
+</dd>
+<dt><a href="#updateTimecard">updateTimecard(timecardId, data, callback)</a></dt>
+<dd><p>Updates a timecard, takes in Timecard Id and Data Object</p>
+</dd>
+<dt><a href="#deleteTimecard">deleteTimecard(timecardId, callback)</a></dt>
+<dd><p>Deletes a timecard</p>
+</dd>
+<dt><a href="#listTimecardEvents">listTimecardEvents(timecardId, callback)</a></dt>
+<dd><p>Lists all known events for a timecard</p>
+</dd>
+<dt><a href="#listCashDrawerShifts">listCashDrawerShifts([queryParams], callback)</a></dt>
+<dd><p>Lists all Cash Drawer Shifts for an instance, takes optional parameters</p>
+</dd>
+<dt><a href="#getCashDrawerShift">getCashDrawerShift(shiftId, callback)</a></dt>
+<dd><p>Gets Cash Drawer Details for a provided Shift Id</p>
+</dd>
 <dt><a href="#listItems">listItems(callback)</a></dt>
 <dd><p>list Items based on location ID</p>
 </dd>
@@ -54,7 +78,7 @@
 <dd><p>Deletes an Item</p>
 </dd>
 <dt><a href="#uploadItemImage">uploadItemImage(itemId, imageUrl, imageExtension, callback)</a></dt>
-<dd><p>Uploads an Item image. This function is intended to use url based references but could be updated to use file system images. If requested,
+<dd><p>Uploads an Item image. This function takes a url based references but could be updated to use file system images. If requested,
 it could also automatically generate the image extension via something like GraphicsMagick/ImageMagick
 <a href="https://docs.connect.squareup.com/api/connect/v1/#post-image">Read More</a></p>
 </dd>
@@ -106,30 +130,6 @@ it could also automatically generate the image extension via something like Grap
 <dt><a href="#getPayment">getPayment(paymentId, callback)</a></dt>
 <dd><p>fetches a payment based on payment ID</p>
 </dd>
-<dt><a href="#listTimecards">listTimecards(callback)</a></dt>
-<dd><p>Lists timecards for an instance</p>
-</dd>
-<dt><a href="#getTimecard">getTimecard(timecardId, callback)</a></dt>
-<dd><p>Gets a timecard based on Timecard Id</p>
-</dd>
-<dt><a href="#createTimecard">createTimecard(data, callback)</a></dt>
-<dd><p>Creates a timecard for an employee</p>
-</dd>
-<dt><a href="#updateTimecard">updateTimecard(timecardId, data, callback)</a></dt>
-<dd><p>Updates a timecard, takes in Timecard Id and Data Object</p>
-</dd>
-<dt><a href="#deleteTimecard">deleteTimecard(timecardId, callback)</a></dt>
-<dd><p>Deletes a timecard</p>
-</dd>
-<dt><a href="#listTimecardEvents">listTimecardEvents(timecardId, callback)</a></dt>
-<dd><p>Lists all known events for a timecard</p>
-</dd>
-<dt><a href="#listCashDrawerShifts">listCashDrawerShifts([queryParams], callback)</a></dt>
-<dd><p>Lists all Cash Drawer Shifts for an instance, takes optional parameters</p>
-</dd>
-<dt><a href="#getCashDrawerShift">getCashDrawerShift(shiftId, callback)</a></dt>
-<dd><p>Gets Cash Drawer Details for a provided Shift Id</p>
-</dd>
 <dt><a href="#listSettlements">listSettlements([queryParams], callback)</a></dt>
 <dd><p>lists Settlements based on instance location ID, has various query parameters</p>
 </dd>
@@ -141,6 +141,27 @@ it could also automatically generate the image extension via something like Grap
 </dd>
 <dt><a href="#createRefund">createRefund(data, callback)</a></dt>
 <dd><p>Creates a refund</p>
+</dd>
+<dt><a href="#listDiscounts">listDiscounts([queryParams], callback)</a></dt>
+<dd><p>Lists Discounts for an instance location, takes various query parameters</p>
+</dd>
+<dt><a href="#createDiscount">createDiscount(data, callback)</a></dt>
+<dd><p>Creates a Discount for a location based on provided data</p>
+</dd>
+<dt><a href="#updateDiscount">updateDiscount(discountId, data, callback)</a></dt>
+<dd><p>Updates a Discount based on provided Discount Id and data</p>
+</dd>
+<dt><a href="#deleteDiscount">deleteDiscount(discountId, callback)</a></dt>
+<dd><p>Deletes a Discount based on provided Discount Id</p>
+</dd>
+<dt><a href="#createModifierOption">createModifierOption(modifierListId, data, callback)</a></dt>
+<dd><p>Creates a new Modifier Option for a Modifier List</p>
+</dd>
+<dt><a href="#updateModifierOption">updateModifierOption(modifierListId, modifierOptionId, data, callback)</a></dt>
+<dd><p>Updates a Modifier Option based on Id and Provided Data</p>
+</dd>
+<dt><a href="#deleteModifierOption">deleteModifierOption(modifierListId, modifierOptionId, callback)</a></dt>
+<dd><p>Deletes a Modfiier Option based on provided Id</p>
 </dd>
 <dt><a href="#listPages">listPages(callback)</a></dt>
 <dd><p>Lists all pages for an Instace Location</p>
@@ -219,18 +240,6 @@ Main Export, instantiates a Square Client
 | locationId | <code>String</code> |  | Square Location ID |
 | accessToken | <code>String</code> |  | Access Token per location |
 | [extendedDebugInfo] | <code>Boolean</code> | <code>false</code> | Extended response info, useful for debugging as Square doesn't always return an explicit error |
-
-<a name="SquareConnect+getCustomerInfoFromReceipt"></a>
-
-### squareConnect.getCustomerInfoFromReceipt(receiptUrl, callback)
-Extracts AID from customer receipt based on Url, only to be used for Card Transactions
-
-**Kind**: instance method of <code>[SquareConnect](#SquareConnect)</code>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| receiptUrl | <code>String</code> | URL of payment receipt |
-| callback | <code>function</code> |  |
 
 <a name="getMerchantProfile"></a>
 
@@ -352,6 +361,102 @@ Update Employee based on employee ID
 | data | <code>Object</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#put-employeeid">Properties</a> |
 | callback | <code>function</code> |  |
 
+<a name="listTimecards"></a>
+
+## listTimecards(callback)
+Lists timecards for an instance
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| callback | <code>function</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#get-timecards">Read More</a> |
+
+<a name="getTimecard"></a>
+
+## getTimecard(timecardId, callback)
+Gets a timecard based on Timecard Id
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| timecardId | <code>String</code> | Timecard Id to fetch |
+| callback | <code>function</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#get-timecardid">Read More</a> |
+
+<a name="createTimecard"></a>
+
+## createTimecard(data, callback)
+Creates a timecard for an employee
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| data | <code>Object</code> | takes data as a key:value object <a href="https://docs.connect.squareup.com/api/connect/v1/#post-timecards">Properties</a> |
+| callback | <code>function</code> |  |
+
+<a name="updateTimecard"></a>
+
+## updateTimecard(timecardId, data, callback)
+Updates a timecard, takes in Timecard Id and Data Object
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| timecardId | <code>String</code> | Timecard Id to update |
+| data | <code>Object</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#put-timecardid">Properties</a> |
+| callback | <code>function</code> |  |
+
+<a name="deleteTimecard"></a>
+
+## deleteTimecard(timecardId, callback)
+Deletes a timecard
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| timecardId | <code>String</code> | Id of Timecard to delete |
+| callback | <code>function</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#delete-timecardid">Read More</a> |
+
+<a name="listTimecardEvents"></a>
+
+## listTimecardEvents(timecardId, callback)
+Lists all known events for a timecard
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| timecardId | <code>String</code> | Id of timecard to look up |
+| callback | <code>function</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#get-events">Read More</a> |
+
+<a name="listCashDrawerShifts"></a>
+
+## listCashDrawerShifts([queryParams], callback)
+Lists all Cash Drawer Shifts for an instance, takes optional parameters
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [queryParams] | <code>Object</code> | takes a query as a key:value object and will automatically construct the query string for Square. -  <a href="https://docs.connect.squareup.com/api/connect/v1/#get-cashdrawershifts">Properties</a> |
+| callback | <code>function</code> |  |
+
+<a name="getCashDrawerShift"></a>
+
+## getCashDrawerShift(shiftId, callback)
+Gets Cash Drawer Details for a provided Shift Id
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| shiftId | <code>String</code> | Shift Id to fetch |
+| callback | <code>function</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#get-cashdrawershiftid">Read More</a> |
+
 <a name="listItems"></a>
 
 ## listItems(callback)
@@ -415,7 +520,7 @@ Deletes an Item
 <a name="uploadItemImage"></a>
 
 ## uploadItemImage(itemId, imageUrl, imageExtension, callback)
-Uploads an Item image. This function is intended to use url based references but could be updated to use file system images. If requested,
+Uploads an Item image. This function takes a url based references but could be updated to use file system images. If requested,
 it could also automatically generate the image extension via something like GraphicsMagick/ImageMagick
 <a href="https://docs.connect.squareup.com/api/connect/v1/#post-image">Read More</a>
 
@@ -625,102 +730,6 @@ fetches a payment based on payment ID
 | paymentId | <code>String</code> | payment ID to fetch <a href="https://docs.connect.squareup.com/api/connect/v1/#get-paymentid">Read More</a> |
 | callback | <code>function</code> |  |
 
-<a name="listTimecards"></a>
-
-## listTimecards(callback)
-Lists timecards for an instance
-
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| callback | <code>function</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#get-timecards">Read More</a> |
-
-<a name="getTimecard"></a>
-
-## getTimecard(timecardId, callback)
-Gets a timecard based on Timecard Id
-
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| timecardId | <code>String</code> | Timecard Id to fetch |
-| callback | <code>function</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#get-timecardid">Read More</a> |
-
-<a name="createTimecard"></a>
-
-## createTimecard(data, callback)
-Creates a timecard for an employee
-
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| data | <code>Object</code> | takes data as a key:value object <a href="https://docs.connect.squareup.com/api/connect/v1/#post-timecards">Properties</a> |
-| callback | <code>function</code> |  |
-
-<a name="updateTimecard"></a>
-
-## updateTimecard(timecardId, data, callback)
-Updates a timecard, takes in Timecard Id and Data Object
-
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| timecardId | <code>String</code> | Timecard Id to update |
-| data | <code>Object</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#put-timecardid">Properties</a> |
-| callback | <code>function</code> |  |
-
-<a name="deleteTimecard"></a>
-
-## deleteTimecard(timecardId, callback)
-Deletes a timecard
-
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| timecardId | <code>String</code> | Id of Timecard to delete |
-| callback | <code>function</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#delete-timecardid">Read More</a> |
-
-<a name="listTimecardEvents"></a>
-
-## listTimecardEvents(timecardId, callback)
-Lists all known events for a timecard
-
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| timecardId | <code>String</code> | Id of timecard to look up |
-| callback | <code>function</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#get-events">Read More</a> |
-
-<a name="listCashDrawerShifts"></a>
-
-## listCashDrawerShifts([queryParams], callback)
-Lists all Cash Drawer Shifts for an instance, takes optional parameters
-
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| [queryParams] | <code>Object</code> | takes a query as a key:value object and will automatically construct the query string for Square. -  <a href="https://docs.connect.squareup.com/api/connect/v1/#get-cashdrawershifts">Properties</a> |
-| callback | <code>function</code> |  |
-
-<a name="getCashDrawerShift"></a>
-
-## getCashDrawerShift(shiftId, callback)
-Gets Cash Drawer Details for a provided Shift Id
-
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| shiftId | <code>String</code> | Shift Id to fetch |
-| callback | <code>function</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#get-cashdrawershiftid">Read More</a> |
-
 <a name="listSettlements"></a>
 
 ## listSettlements([queryParams], callback)
@@ -768,6 +777,95 @@ Creates a refund
 | --- | --- | --- |
 | data | <code>Object</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#post-refunds">Properties</a> |
 | callback | <code>function</code> |  |
+
+<a name="listDiscounts"></a>
+
+## listDiscounts([queryParams], callback)
+Lists Discounts for an instance location, takes various query parameters
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [queryParams] | <code>Object</code> | takes a query as a key:value object and will automatically construct the query string for Square. -  <a href="https://docs.connect.squareup.com/api/connect/v1/#get-discounts">Properties</a> |
+| callback | <code>function</code> |  |
+
+<a name="createDiscount"></a>
+
+## createDiscount(data, callback)
+Creates a Discount for a location based on provided data
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| data | <code>Object</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#post-discounts">Properties</a> |
+| callback | <code>function</code> |  |
+
+<a name="updateDiscount"></a>
+
+## updateDiscount(discountId, data, callback)
+Updates a Discount based on provided Discount Id and data
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| discountId | <code>String</code> | Discount Id to Update |
+| data | <code>Object</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#put-discountid">Properties</a> |
+| callback | <code>function</code> |  |
+
+<a name="deleteDiscount"></a>
+
+## deleteDiscount(discountId, callback)
+Deletes a Discount based on provided Discount Id
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| discountId | <code>String</code> | Discount Id to delete |
+| callback | <code>function</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#delete-discountid">Read More</a> |
+
+<a name="createModifierOption"></a>
+
+## createModifierOption(modifierListId, data, callback)
+Creates a new Modifier Option for a Modifier List
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| modifierListId | <code>String</code> | Modifier List Id to Create a new Option for |
+| data | <code>Object</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#post-modifieroptions">Properties</a> |
+| callback | <code>function</code> |  |
+
+<a name="updateModifierOption"></a>
+
+## updateModifierOption(modifierListId, modifierOptionId, data, callback)
+Updates a Modifier Option based on Id and Provided Data
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| modifierListId | <code>String</code> | Modifier List Id to Update |
+| modifierOptionId | <code>String</code> | Modifier Optioin Id to Update |
+| data | <code>Object</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#put-modifieroptionid">Properties</a> |
+| callback | <code>function</code> |  |
+
+<a name="deleteModifierOption"></a>
+
+## deleteModifierOption(modifierListId, modifierOptionId, callback)
+Deletes a Modfiier Option based on provided Id
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| modifierListId | <code>String</code> | Modifier List Id to Modify |
+| modifierOptionId | <code>String</code> | Modifier Option Id to Delete |
+| callback | <code>function</code> | <a href="https://docs.connect.squareup.com/api/connect/v1/#delete-modifieroptionid">Read More</a> |
 
 <a name="listPages"></a>
 
@@ -862,7 +960,7 @@ Lists Customers via instance Auth Token
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [queryParams] | <code>Object</code> | takes a query as a key:value object and will automatically construct the query string for Square <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-listcustomers">>Properties</a> |
+| [queryParams] | <code>Object</code> | takes a query as a key:value object and will automatically construct the query string for Square. -  <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-listcustomers">>Properties</a> |
 | callback | <code>function</code> |  |
 
 <a name="getCustomer"></a>
@@ -949,7 +1047,7 @@ lists transactions for a location, has various query parameters
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [queryParams] | <code>Object</code> | takes a query as a key:value object and will automatically construct the query string for Square <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-listtransactions">Properties</a> |
+| [queryParams] | <code>Object</code> | takes a query as a key:value object and will automatically construct the query string for Square. -  <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-listtransactions">Properties</a> |
 | callback | <code>function</code> | [description] |
 
 <a name="getTransaction"></a>
@@ -1021,6 +1119,6 @@ Lists Refunds for an instance
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [queryParams] | <code>Object</code> | takes a query as a key:value object and will automatically construct the query string for Square <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-listrefunds">Properties</a> |
+| [queryParams] | <code>Object</code> | takes a query as a key:value object and will automatically construct the query string for Square. -  <a href="https://docs.connect.squareup.com/api/connect/v2/#endpoint-listrefunds">Properties</a> |
 | callback | <code>function</code> |  |
 
