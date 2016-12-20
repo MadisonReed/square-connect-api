@@ -1,7 +1,7 @@
 const fs = require('fs');
 const jsdoc2md = require('jsdoc-to-markdown')
 const FILES = [
-  './lib/SquareConnect.js',
+  './lib/squareConnect.js',
   './lib/v1/index.js',
   './lib/v2/index.js'
 ];
