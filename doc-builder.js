@@ -2,8 +2,8 @@ const fs = require('fs');
 const jsdoc2md = require('jsdoc-to-markdown')
 const FILES = [
   './lib/SquareConnect.js',
-  './v1/index.js',
-  './v2/index.js'
+  './lib/v1/index.js',
+  './lib/v2/index.js'
 ];
 
 jsdoc2md.render({ files: FILES }).then((md) => {
