@@ -1,11 +1,15 @@
 {
   "name": "square-connect-api",
   "version": "0.0.1",
-  "description": "node api wrapper for square connect v1 and v2",
+  "description": "Node api wrapper for Square Connect v1 and v2",
   "main": "index.js",
   "scripts": {
     "test": "NODE_ENV=test mocha ./test/index.js",
     "generate-docs": "node doc-builder"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MadisonReed/square-connect-api"
   },
   "engines": {
     "node": ">=6.9.1"
@@ -38,5 +42,9 @@
     "jsdoc-to-markdown": "^2.0.1",
     "mocha": "^3.2.0",
     "sinon": "^1.17.6"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/MadisonReed/square-connect-api/issues"
+  },
+  "homepage": "https://github.com/MadisonReed/square-connect-api"
 }
