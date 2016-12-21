@@ -4,7 +4,7 @@ const sinon = require('sinon');
 
 const imageDir = path.join(__dirname, 'assets', 'images');
 
-const SquareConnect = require(path.join(__dirname, '..', 'lib', 'squareConnect'));
+const SquareConnect = require(path.join(__dirname, '..', 'lib', 'SquareConnect'));
 
 describe('SquareConnect', () => {
 
