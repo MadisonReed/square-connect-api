@@ -2,7 +2,7 @@
   "name": "square-connect-api",
   "version": "0.0.1",
   "description": "Node api wrapper for Square Connect v1 and v2",
-  "main": "index.js",
+  "main": "./lib/squareConnect.js",
   "scripts": {
     "test": "NODE_ENV=test mocha ./test/index.js",
     "generate-docs": "node doc-builder"
@@ -23,22 +23,26 @@
   ],
   "author": {
     "name": "Michael Walker",
-    "email": "cmichaelswalker@gmail.com"
+    "email": "mike@madison-reed.com"
   },
   "contributors": [
     {
       "name": "Michael Walker",
-      "email": "cmichaelswalker@gmail.com"
+      "email": "mike@madison-reed.com"
+    },
+    {
+      "name": "Don Kaiser",
+      "email": "don@madison-reed.com"
     }
   ],
   "license": "MIT",
   "dependencies": {
     "async": "^2.1.4",
-    "request": "^2.79.0"
+    "request": "^2.79.0",
+    "gm": "^1.23.0"
   },
   "devDependencies": {
     "eslint": "^3.12.2",
-    "gm": "^1.23.0",
     "jsdoc-to-markdown": "^2.0.1",
     "mocha": "^3.2.0",
     "sinon": "^1.17.6"
