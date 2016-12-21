@@ -2,7 +2,7 @@
   "name": "square-connect-api",
   "version": "0.0.1",
   "description": "Node api wrapper for Square Connect v1 and v2",
-  "main": "./lib/squareConnect.js",
+  "main": "./index.js",
   "scripts": {
     "test": "NODE_ENV=test mocha ./test/index.js",
     "generate-docs": "node doc-builder"
