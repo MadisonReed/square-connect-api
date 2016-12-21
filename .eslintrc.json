@@ -18,14 +18,9 @@
 
     ],
     "globals": {
-      "_": true,
-      "angular": true,
-      "controller": true,
-      "directive": true,
-      "factory": true,
-      "service": true,
-      "filter": true,
-      "provider": true
+      "describe": true,
+      "before": true,
+      "after": true
     },
     "rules": {
         "indent": [
