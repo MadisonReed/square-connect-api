@@ -30,6 +30,8 @@
   },
   "devDependencies": {
     "eslint": "^3.12.2",
-    "jsdoc-to-markdown": "^2.0.1"
+    "gm": "^1.23.0",
+    "jsdoc-to-markdown": "^2.0.1",
+    "mocha": "^3.2.0"
   }
 }
